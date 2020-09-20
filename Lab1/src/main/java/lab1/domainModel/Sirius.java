@@ -7,6 +7,7 @@ public class Sirius {
     public ArrayList<Corporation> corporations = new ArrayList<>();
 
     public Sirius() {
-        corporations.add(new CyberneticCorporation());
+        corporations.add(new CyberneticsCorporation());
+        corporations.add(new InformaticsCorporation());
     }
 }
