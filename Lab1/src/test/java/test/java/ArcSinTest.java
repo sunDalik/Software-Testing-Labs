@@ -1,6 +1,5 @@
 package test.java;
 
-
 import main.java.ArcSinFunction;
 import org.junit.Assert;
 import org.junit.BeforeClass;

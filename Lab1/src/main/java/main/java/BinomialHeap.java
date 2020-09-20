@@ -30,6 +30,10 @@ public class BinomialHeap<T extends Comparable<? super T>> {
         trees[0] = new Node<>(item);
     }
 
+    public int getSize() {
+        return size;
+    }
+
     public void clear() {
         size = 0;
         trees = new Node[1];
@@ -106,7 +110,7 @@ public class BinomialHeap<T extends Comparable<? super T>> {
     private int findMinIndex() {
         int minIndex = 0;
         for (int i = 0; i < trees.length; i++) {
-            if (trees[minIndex] == null || trees[i].element.compareTo(trees[minIndex].element) < 0 && trees[i] != null) {
+            if (trees[minIndex] == null || trees[i] != null && trees[i].element.compareTo(trees[minIndex].element) < 0) {
                 minIndex = i;
             }
         }
@@ -114,6 +118,8 @@ public class BinomialHeap<T extends Comparable<? super T>> {
     }
 
     public T removeSmallest() {
+        if (size == 0) return null;
+
         int minIndex = findMinIndex();
         T minItem = trees[minIndex].element;
 
