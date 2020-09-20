@@ -97,4 +97,42 @@ public class BinomialHeapTest {
         BinomialHeap<Integer> heap = new BinomialHeap<>(9);
         Assert.assertEquals("Size of a heap initialized with an item should be 1", 1, heap.getSize());
     }
+
+    @Test
+    public void testHeapStructure() {
+        BinomialHeap<Integer> heap = new BinomialHeap<>(3);
+        heap.insert(1);
+        heap.insert(9);
+        heap.insert(0);
+        heap.insert(6);
+        heap.insert(2);
+        heap.insert(7);
+        heap.insert(2);
+
+        /*
+        the structure is gonna look like this
+        null null null 0
+                     / | \
+                    2  1   9
+                  / |  |
+                 2  6  3
+                 |
+                 7
+         */
+
+        Assert.assertNull("Internal structure is incorrect", heap.getTrees()[0]);
+        Assert.assertNull("Internal structure is incorrect", heap.getTrees()[2]);
+        Assert.assertNull("Internal structure is incorrect", heap.getTrees()[2]);
+        Assert.assertEquals("Internal structure is incorrect", new Integer(0), heap.getTrees()[3].element);
+
+        Assert.assertEquals("Internal structure is incorrect", new Integer(2), heap.getTrees()[3].leftChild.element);
+        Assert.assertEquals("Internal structure is incorrect", new Integer(1), heap.getTrees()[3].leftChild.nextSibling.element);
+        Assert.assertEquals("Internal structure is incorrect", new Integer(9), heap.getTrees()[3].leftChild.nextSibling.nextSibling.element);
+
+        Assert.assertEquals("Internal structure is incorrect", new Integer(2), heap.getTrees()[3].leftChild.leftChild.element);
+        Assert.assertEquals("Internal structure is incorrect", new Integer(6), heap.getTrees()[3].leftChild.leftChild.nextSibling.element);
+        Assert.assertEquals("Internal structure is incorrect", new Integer(3), heap.getTrees()[3].leftChild.nextSibling.leftChild.element);
+
+        Assert.assertEquals("Internal structure is incorrect", new Integer(7), heap.getTrees()[3].leftChild.leftChild.leftChild.element);
+    }
 }

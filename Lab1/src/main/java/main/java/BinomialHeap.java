@@ -4,10 +4,10 @@ public class BinomialHeap<T extends Comparable<? super T>> {
     private int size;
     private Node<T>[] trees;
 
-    private static class Node<T> {
-        T element;
-        Node<T> leftChild;
-        Node<T> nextSibling;
+    public static class Node<T> {
+        public T element;
+        public Node<T> leftChild;
+        public Node<T> nextSibling;
 
         Node(T el) {
             this(el, null, null);
@@ -32,6 +32,10 @@ public class BinomialHeap<T extends Comparable<? super T>> {
 
     public int getSize() {
         return size;
+    }
+
+    public Node<T>[] getTrees() {
+        return trees;
     }
 
     public void clear() {
