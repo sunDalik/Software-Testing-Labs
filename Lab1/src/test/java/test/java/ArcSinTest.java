@@ -51,8 +51,8 @@ public class ArcSinTest {
     }
 
     private void testAssertNull(double value) {
-        Double actual = ArcSinFunction.getArcSin(value);
-        Assert.assertNull("Result should be null for x = " + value, actual);
+        Double result = ArcSinFunction.getArcSin(value);
+        Assert.assertTrue("Result should be NaN for x = " + value, Double.isNaN(result));
     }
 
     private void testWithValue(double value) {

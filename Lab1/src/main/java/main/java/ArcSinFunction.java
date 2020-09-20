@@ -5,7 +5,7 @@ public class ArcSinFunction {
 
     // power series implementation
     public static Double getArcSin(double x) {
-        if (Math.abs(x) > 1) return null;
+        if (Math.abs(x) > 1) return Double.NaN;
         if (x == 1.0) return Math.PI / 2;
         if (x == -1.0) return -Math.PI / 2;
 
