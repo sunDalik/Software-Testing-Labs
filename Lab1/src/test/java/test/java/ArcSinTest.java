@@ -46,18 +46,18 @@ public class ArcSinTest {
 
     @Test
     public void testOutOfBounds() {
-        testAssertNull(-2);
-        testAssertNull(2);
+        testAssertNaN(-2);
+        testAssertNaN(2);
     }
 
-    private void testAssertNull(double value) {
-        Double result = ArcSinFunction.getArcSin(value);
-        Assert.assertTrue("Result should be NaN for x = " + value, Double.isNaN(result));
+    private void testAssertNaN(double x) {
+        Double result = ArcSinFunction.getArcSin(x);
+        Assert.assertTrue("Result should be NaN for x = " + x, Double.isNaN(result));
     }
 
-    private void testWithValue(double value) {
-        String expected = df.format(Math.asin(value));
-        String actual = df.format(ArcSinFunction.getArcSin(value));
-        Assert.assertEquals("Wrong result for x = " + value, expected, actual);
+    private void testWithValue(double x) {
+        String expected = df.format(Math.asin(x));
+        String actual = df.format(ArcSinFunction.getArcSin(x));
+        Assert.assertEquals("Wrong result for x = " + x, expected, actual);
     }
 }
