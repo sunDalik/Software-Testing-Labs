@@ -39,6 +39,20 @@ public class BinomialHeapTest {
     }
 
     @Test
+    public void testRemoveSmallest() {
+        BinomialHeap<Integer> heap = new BinomialHeap<>();
+        heap.insert(1);
+        heap.insert(-3);
+        heap.insert(99);
+        heap.insert(0);
+        Assert.assertEquals("The element removed through removeSmallest() is not the smallest", new Integer(-3), heap.removeSmallest());
+        Assert.assertEquals("The element removed through removeSmallest() is not the smallest", new Integer(0), heap.removeSmallest());
+        Assert.assertEquals("The element removed through removeSmallest() is not the smallest", new Integer(1), heap.removeSmallest());
+        Assert.assertEquals("The element removed through removeSmallest() is not the smallest", new Integer(99), heap.removeSmallest());
+        Assert.assertNull("Calling removeSmallest() on empty heap should return null", heap.removeSmallest());
+    }
+
+    @Test
     public void testMerge() {
         BinomialHeap<Integer> heap = new BinomialHeap<>();
         Integer[] items1 = {2, 4, 6, 8};
@@ -68,7 +82,7 @@ public class BinomialHeapTest {
 
         Arrays.sort(totalItems);
         Arrays.sort(heapItems);
-        
+
         Assert.assertArrayEquals("After merging two heaps, resulting contents should be equal to the sum of contents of both heaps", totalItems, heapItems);
     }
 
@@ -76,5 +90,11 @@ public class BinomialHeapTest {
     public void testEmptyHeap() {
         BinomialHeap<Integer> heap = new BinomialHeap<>();
         Assert.assertEquals("Size of an empty heap should be 0", 0, heap.getSize());
+    }
+
+    @Test
+    public void testOneItemHeap() {
+        BinomialHeap<Integer> heap = new BinomialHeap<>(9);
+        Assert.assertEquals("Size of a heap initialized with an item should be 1", 1, heap.getSize());
     }
 }
