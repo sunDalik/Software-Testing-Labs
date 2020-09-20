@@ -1,6 +1,6 @@
 package test.java;
 
-import main.java.BinomialHeap;
+import lab1.BinomialHeap;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 package test.java;
 
-import main.java.ArcSinFunction;
+import lab1.ArcSinFunction;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class ArcSinTest {
     }
 
     @Test
-    public void testCurve() {
+    public void testExponential() {
         testWithValue(-0.97);
         testWithValue(0.97);
     }

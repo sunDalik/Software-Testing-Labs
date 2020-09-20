@@ -1,4 +1,4 @@
-package main.java;
+package lab1;
 
 public class BinomialHeap<T extends Comparable<? super T>> {
     private int size;

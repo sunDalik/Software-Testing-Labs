@@ -1,4 +1,4 @@
-package main.java;
+package lab1;
 
 public class ArcSinFunction {
     public static double precision = 1E-10;
