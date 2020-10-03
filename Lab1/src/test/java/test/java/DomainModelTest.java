@@ -62,4 +62,16 @@ public class DomainModelTest {
         encyclopedia.addEntry(key, definition);
         Assert.assertEquals("Got wrong definition by key after adding entry to encyclopedia", definition, encyclopedia.getDefinition(key));
     }
+
+    @Test
+    public void testEncyclopediaEmpty() {
+        Encyclopedia encyclopedia = new Encyclopedia();
+        Assert.assertEquals("New encyclopedia should have 0 entries", 0, encyclopedia.entries.size());
+    }
+
+    @Test
+    public void testEncyclopediaNullEntry() {
+        Encyclopedia encyclopedia = new Encyclopedia();
+        Assert.assertNull("If encyclopedia doesn't have an entry by given key, it must return null", encyclopedia.getDefinition("anything"));
+    }
 }
