@@ -3,15 +3,13 @@ package test.java;
 import lab1.domainModel.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 public class DomainModelTest {
 
     private Sirius sirius;
     private GreatGalaxyEncyclopedia greatGalaxyEncyclopedia;
-
-    private final String greatGalaxyEncyclopediaRobotDefinition = "Mechanical apparatus designed to do human work";
-    private final String siriusCyberneticCorporationMarketingDepartmentRobotDefinition = "Your plastic friend that will entertain you!";
 
     @BeforeEach
     public void setUpDomainModel() {
@@ -21,6 +19,7 @@ public class DomainModelTest {
 
     @Test
     public void testGreatGalaxyEncyclopediaRobotEntry() {
+        String greatGalaxyEncyclopediaRobotDefinition = "Mechanical apparatus designed to do human work";
         Assertions.assertEquals(greatGalaxyEncyclopediaRobotDefinition, greatGalaxyEncyclopedia.getDefinition("Robot"), "Robot definition from Great Galaxy Encyclopedia is incorrect");
     }
 
@@ -44,34 +43,49 @@ public class DomainModelTest {
         }
         Assertions.assertNotNull(marketingDepartment, "No Marketing Department was found in Sirius's Cybernetics Corporation");
 
+        String siriusCyberneticCorporationMarketingDepartmentRobotDefinition = "Your plastic friend that will entertain you!";
         Assertions.assertEquals(siriusCyberneticCorporationMarketingDepartmentRobotDefinition, marketingDepartment.slogans.getDefinition("Robot"), "Robot definition from Marketing Department is incorrect");
     }
 
     @Test
-    public void testEncyclopediaCaseInsensitivity() {
-        Assertions.assertEquals(greatGalaxyEncyclopediaRobotDefinition, greatGalaxyEncyclopedia.getDefinition("robot"), "Encyclopedia entries are not case insensitive");
-        Assertions.assertEquals(greatGalaxyEncyclopediaRobotDefinition, greatGalaxyEncyclopedia.getDefinition("ROBOT"), "Encyclopedia entries are not case insensitive");
-        Assertions.assertEquals(greatGalaxyEncyclopediaRobotDefinition, greatGalaxyEncyclopedia.getDefinition("rObOT"), "Encyclopedia entries are not case insensitive");
+    public void testSiriusName() {
+        Assertions.assertEquals("Sirius", sirius.name, "Sirius's name is not Sirius");
     }
 
-    @Test
-    public void testEncyclopediaAddEntry() {
-        Encyclopedia encyclopedia = new Encyclopedia();
-        String key = "cat";
-        String definition = "fluffy animal";
-        encyclopedia.addEntry(key, definition);
-        Assertions.assertEquals(definition, encyclopedia.getDefinition(key), "Got wrong definition by key after adding entry to encyclopedia");
-    }
+    @Nested
+    class EncyclopediaTest {
+        Encyclopedia encyclopedia;
 
-    @Test
-    public void testEncyclopediaEmpty() {
-        Encyclopedia encyclopedia = new Encyclopedia();
-        Assertions.assertEquals(0, encyclopedia.entries.size(), "New encyclopedia should have 0 entries");
-    }
+        @BeforeEach
+        public void setUpEncyclopedia() {
+            encyclopedia = new Encyclopedia();
+        }
 
-    @Test
-    public void testEncyclopediaNullEntry() {
-        Encyclopedia encyclopedia = new Encyclopedia();
-        Assertions.assertNull(encyclopedia.getDefinition("anything"), "If encyclopedia doesn't have an entry by given key, it must return null");
+        @Test
+        public void testEncyclopediaAddEntry() {
+            String key = "cat";
+            String definition = "fluffy animal";
+            encyclopedia.addEntry(key, definition);
+            Assertions.assertEquals(definition, encyclopedia.getDefinition(key), "Got wrong definition by key after adding entry to encyclopedia");
+        }
+
+        @Test
+        public void testEncyclopediaEmpty() {
+            Assertions.assertEquals(0, encyclopedia.entries.size(), "New encyclopedia should have 0 entries");
+        }
+
+        @Test
+        public void testEncyclopediaNullEntry() {
+            Assertions.assertNull(encyclopedia.getDefinition("anything"), "If encyclopedia doesn't have an entry by given key, it must return null");
+        }
+
+        @Test
+        public void testEncyclopediaCaseInsensitivity() {
+            encyclopedia.addEntry("Hello", "world");
+            Assertions.assertEquals("world", encyclopedia.getDefinition("Hello"), "Encyclopedia entries are not case insensitive");
+            Assertions.assertEquals("world", encyclopedia.getDefinition("hello"), "Encyclopedia entries are not case insensitive");
+            Assertions.assertEquals("world", encyclopedia.getDefinition("HELLO"), "Encyclopedia entries are not case insensitive");
+            Assertions.assertEquals("world", encyclopedia.getDefinition("hElLo"), "Encyclopedia entries are not case insensitive");
+        }
     }
 }
