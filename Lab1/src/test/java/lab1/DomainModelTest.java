@@ -1,4 +1,4 @@
-package test.java;
+package lab1;
 
 import lab1.domainModel.*;
 import org.junit.jupiter.api.Assertions;

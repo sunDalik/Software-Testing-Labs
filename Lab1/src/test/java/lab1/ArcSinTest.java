@@ -1,6 +1,5 @@
-package test.java;
+package lab1;
 
-import lab1.ArcSinFunction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
