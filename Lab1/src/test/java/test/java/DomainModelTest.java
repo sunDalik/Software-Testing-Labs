@@ -8,7 +8,7 @@ import org.junit.Test;
 public class DomainModelTest {
 
     private Sirius sirius;
-    private GreatGalaxyEncyclopedia encyclopedia;
+    private GreatGalaxyEncyclopedia greatGalaxyEncyclopedia;
 
     private final String greatGalaxyEncyclopediaRobotDefinition = "Mechanical apparatus designed to do human work";
     private final String siriusCyberneticCorporationMarketingDepartmentRobotDefinition = "Your plastic friend that will entertain you!";
@@ -16,12 +16,12 @@ public class DomainModelTest {
     @Before
     public void setUpDomainModel() {
         sirius = new Sirius();
-        encyclopedia = new GreatGalaxyEncyclopedia();
+        greatGalaxyEncyclopedia = new GreatGalaxyEncyclopedia();
     }
 
     @Test
     public void testGreatGalaxyEncyclopediaRobotEntry() {
-        Assert.assertEquals("Robot definition from Great Galaxy Encyclopedia is incorrect", greatGalaxyEncyclopediaRobotDefinition, encyclopedia.getDefinition("Robot"));
+        Assert.assertEquals("Robot definition from Great Galaxy Encyclopedia is incorrect", greatGalaxyEncyclopediaRobotDefinition, greatGalaxyEncyclopedia.getDefinition("Robot"));
     }
 
     @Test
@@ -49,8 +49,17 @@ public class DomainModelTest {
 
     @Test
     public void testEncyclopediaCaseInsensitivity() {
-        Assert.assertEquals("Encyclopedia entries are not case insensitive", greatGalaxyEncyclopediaRobotDefinition, encyclopedia.getDefinition("robot"));
-        Assert.assertEquals("Encyclopedia entries are not case insensitive", greatGalaxyEncyclopediaRobotDefinition, encyclopedia.getDefinition("ROBOT"));
-        Assert.assertEquals("Encyclopedia entries are not case insensitive", greatGalaxyEncyclopediaRobotDefinition, encyclopedia.getDefinition("rObOT"));
+        Assert.assertEquals("Encyclopedia entries are not case insensitive", greatGalaxyEncyclopediaRobotDefinition, greatGalaxyEncyclopedia.getDefinition("robot"));
+        Assert.assertEquals("Encyclopedia entries are not case insensitive", greatGalaxyEncyclopediaRobotDefinition, greatGalaxyEncyclopedia.getDefinition("ROBOT"));
+        Assert.assertEquals("Encyclopedia entries are not case insensitive", greatGalaxyEncyclopediaRobotDefinition, greatGalaxyEncyclopedia.getDefinition("rObOT"));
+    }
+
+    @Test
+    public void testEncyclopediaAddEntry() {
+        Encyclopedia encyclopedia = new Encyclopedia();
+        String key = "cat";
+        String definition = "fluffy animal";
+        encyclopedia.addEntry(key, definition);
+        Assert.assertEquals("Got wrong definition by key after adding entry to encyclopedia", definition, encyclopedia.getDefinition(key));
     }
 }
