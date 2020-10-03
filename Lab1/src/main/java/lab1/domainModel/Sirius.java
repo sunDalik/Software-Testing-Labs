@@ -1,12 +1,8 @@
 package lab1.domainModel;
 
-import java.util.ArrayList;
-
-public class Sirius {
-    public String name = "Sirius";
-    public ArrayList<Corporation> corporations = new ArrayList<>();
-
+public class Sirius extends Planet {
     public Sirius() {
+        super("Sirius");
         corporations.add(new CyberneticsCorporation());
     }
 }

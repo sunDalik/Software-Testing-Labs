@@ -24,32 +24,39 @@ public class DomainModelTest {
     }
 
     @Test
-    public void testSiriusCyberneticCorporationMarketingDepartmentRobotEntry() {
-        Corporation cyberneticsCorporation = null;
-        for (Corporation corp : sirius.corporations) {
-            if (corp.id == CorporationId.CYBERNETICS) {
-                cyberneticsCorporation = corp;
-                break;
-            }
-        }
+    public void testSiriusHasCyberneticCorporation() {
+        Corporation cyberneticsCorporation = sirius.findCorporation(CorporationId.CYBERNETICS);
         Assertions.assertNotNull(cyberneticsCorporation, "No Cybernetics Corporation was found on Sirius");
+    }
 
-        Department marketingDepartment = null;
-        for (Department dep : cyberneticsCorporation.departments) {
-            if (dep.id == DepartmentId.MARKETING) {
-                marketingDepartment = dep;
-                break;
-            }
-        }
+    @Test
+    public void testCyberneticCorporationHasMarketingDepartment() {
+        Department marketingDepartment = sirius.findCorporation(CorporationId.CYBERNETICS).findDepartment(DepartmentId.MARKETING);
         Assertions.assertNotNull(marketingDepartment, "No Marketing Department was found in Sirius's Cybernetics Corporation");
+    }
 
+    @Test
+    public void testSiriusCyberneticCorporationMarketingDepartmentRobotEntry() {
+        Department marketingDepartment = sirius.findCorporation(CorporationId.CYBERNETICS).findDepartment(DepartmentId.MARKETING);
         String siriusCyberneticCorporationMarketingDepartmentRobotDefinition = "Your plastic friend that will entertain you!";
         Assertions.assertEquals(siriusCyberneticCorporationMarketingDepartmentRobotDefinition, marketingDepartment.slogans.getDefinition("Robot"), "Robot definition from Marketing Department is incorrect");
     }
 
     @Test
+    public void testDefinitionsDiffer() {
+        Department marketingDepartment = sirius.findCorporation(CorporationId.CYBERNETICS).findDepartment(DepartmentId.MARKETING);
+        Assertions.assertNotEquals(greatGalaxyEncyclopedia.getDefinition("Robot"), marketingDepartment.slogans.getDefinition("Robot"), "Robot definition from Marketing Department should differ from Great Galaxy Encyclopedia's definition");
+    }
+
+    @Test
     public void testSiriusName() {
         Assertions.assertEquals("Sirius", sirius.name, "Sirius's name is not Sirius");
+    }
+
+    @Test
+    public void testPlanetName() {
+        Planet planet = new Planet("Earth");
+        Assertions.assertEquals("Earth", planet.name, "Planet name is incorrect");
     }
 
     @Nested
