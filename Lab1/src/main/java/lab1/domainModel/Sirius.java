@@ -8,6 +8,5 @@ public class Sirius {
 
     public Sirius() {
         corporations.add(new CyberneticsCorporation());
-        corporations.add(new InformaticsCorporation());
     }
 }

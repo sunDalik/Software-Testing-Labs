@@ -1,9 +1,9 @@
 package test.java;
 
 import lab1.ArcSinFunction;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -12,7 +12,7 @@ public class ArcSinTest {
 
     private static DecimalFormat df;
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         df = new DecimalFormat("#.######");
         df.setRoundingMode(RoundingMode.CEILING);
@@ -20,32 +20,32 @@ public class ArcSinTest {
 
     @Test
     public void testAt0() {
-        Assert.assertEquals("Wrong result for x = 0", df.format(Math.asin(0)), df.format(ArcSinFunction.getArcSin(0)));
+        Assertions.assertEquals(df.format(Math.asin(0)), df.format(ArcSinFunction.getArcSin(0)), "Wrong result for x = 0");
     }
 
     @Test
     public void testBorders() {
-        Assert.assertEquals("Wrong result for x = 1 (right border)", df.format(Math.asin(1)), df.format(ArcSinFunction.getArcSin(1)));
-        Assert.assertEquals("Wrong result for x = -1 (left border)", df.format(Math.asin(-1)), df.format(ArcSinFunction.getArcSin(-1)));
+        Assertions.assertEquals(df.format(Math.asin(1)), df.format(ArcSinFunction.getArcSin(1)), "Wrong result for x = 1 (right border)");
+        Assertions.assertEquals(df.format(Math.asin(-1)), df.format(ArcSinFunction.getArcSin(-1)), "Wrong result for x = -1 (left border)");
     }
 
     @Test
     public void testLinear() {
-        Assert.assertEquals("Wrong result for x = 0.3 (linear growth)", df.format(Math.asin(0.3)), df.format(ArcSinFunction.getArcSin(0.3)));
-        Assert.assertEquals("Wrong result for x = -0.3 (linear growth)", df.format(Math.asin(-0.3)), df.format(ArcSinFunction.getArcSin(-0.3)));
-        Assert.assertEquals("Wrong result for x = 0.5 (linear growth)", df.format(Math.asin(0.5)), df.format(ArcSinFunction.getArcSin(0.5)));
-        Assert.assertEquals("Wrong result for x = -0.5 (linear growth)", df.format(Math.asin(-0.5)), df.format(ArcSinFunction.getArcSin(-0.5)));
+        Assertions.assertEquals(df.format(Math.asin(0.3)), df.format(ArcSinFunction.getArcSin(0.3)), "Wrong result for x = 0.3 (linear growth)");
+        Assertions.assertEquals(df.format(Math.asin(-0.3)), df.format(ArcSinFunction.getArcSin(-0.3)), "Wrong result for x = -0.3 (linear growth)");
+        Assertions.assertEquals(df.format(Math.asin(0.5)), df.format(ArcSinFunction.getArcSin(0.5)), "Wrong result for x = 0.5 (linear growth)");
+        Assertions.assertEquals(df.format(Math.asin(-0.5)), df.format(ArcSinFunction.getArcSin(-0.5)), "Wrong result for x = -0.5 (linear growth)");
     }
 
     @Test
     public void testExponential() {
-        Assert.assertEquals("Wrong result for x = 0.97 (exponential growth)", df.format(Math.asin(0.97)), df.format(ArcSinFunction.getArcSin(0.97)));
-        Assert.assertEquals("Wrong result for x = -0.97 (exponential growth)", df.format(Math.asin(-0.97)), df.format(ArcSinFunction.getArcSin(-0.97)));
+        Assertions.assertEquals(df.format(Math.asin(0.97)), df.format(ArcSinFunction.getArcSin(0.97)), "Wrong result for x = 0.97 (exponential growth)");
+        Assertions.assertEquals(df.format(Math.asin(-0.97)), df.format(ArcSinFunction.getArcSin(-0.97)), "Wrong result for x = -0.97 (exponential growth)");
     }
 
     @Test
     public void testOutOfBounds() {
-        Assert.assertTrue("Result should be NaN for x = -2", Double.isNaN(ArcSinFunction.getArcSin(-2)));
-        Assert.assertTrue("Result should be NaN for x = 2", Double.isNaN(ArcSinFunction.getArcSin(2)));
+        Assertions.assertTrue(Double.isNaN(ArcSinFunction.getArcSin(-2)), "Result should be NaN for x = -2");
+        Assertions.assertTrue(Double.isNaN(ArcSinFunction.getArcSin(2)), "Result should be NaN for x = 2");
     }
 }
