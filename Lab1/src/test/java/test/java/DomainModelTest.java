@@ -2,22 +2,30 @@ package test.java;
 
 import lab1.domainModel.*;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class DomainModelTest {
 
+    private Sirius sirius;
+    private GreatGalaxyEncyclopedia encyclopedia;
+
     private final String greatGalaxyEncyclopediaRobotDefinition = "Mechanical apparatus designed to do human work";
     private final String siriusCyberneticCorporationMarketingDepartmentRobotDefinition = "Your plastic friend that will entertain you!";
 
+    @Before
+    public void setUpDomainModel() {
+        sirius = new Sirius();
+        encyclopedia = new GreatGalaxyEncyclopedia();
+    }
+
     @Test
     public void testGreatGalaxyEncyclopediaRobotEntry() {
-        GreatGalaxyEncyclopedia encyclopedia = new GreatGalaxyEncyclopedia();
         Assert.assertEquals("Robot definition from Great Galaxy Encyclopedia is incorrect", greatGalaxyEncyclopediaRobotDefinition, encyclopedia.getDefinition("Robot"));
     }
 
     @Test
     public void testSiriusCyberneticCorporationMarketingDepartmentRobotEntry() {
-        Sirius sirius = new Sirius();
         Corporation cyberneticsCorporation = null;
         for (Corporation corp : sirius.corporations) {
             if (corp.id == CorporationId.CYBERNETICS) {
@@ -41,7 +49,6 @@ public class DomainModelTest {
 
     @Test
     public void testEncyclopediaCaseInsensitivity() {
-        GreatGalaxyEncyclopedia encyclopedia = new GreatGalaxyEncyclopedia();
         Assert.assertEquals("Encyclopedia entries are not case insensitive", greatGalaxyEncyclopediaRobotDefinition, encyclopedia.getDefinition("robot"));
         Assert.assertEquals("Encyclopedia entries are not case insensitive", greatGalaxyEncyclopediaRobotDefinition, encyclopedia.getDefinition("ROBOT"));
         Assert.assertEquals("Encyclopedia entries are not case insensitive", greatGalaxyEncyclopediaRobotDefinition, encyclopedia.getDefinition("rObOT"));

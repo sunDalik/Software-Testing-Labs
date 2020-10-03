@@ -20,43 +20,32 @@ public class ArcSinTest {
 
     @Test
     public void testAt0() {
-        testWithValue(0);
+        Assert.assertEquals("Wrong result for x = 0", df.format(Math.asin(0)), df.format(ArcSinFunction.getArcSin(0)));
     }
 
     @Test
     public void testBorders() {
-        testWithValue(-1);
-        testWithValue(1);
+        Assert.assertEquals("Wrong result for x = 1 (right border)", df.format(Math.asin(1)), df.format(ArcSinFunction.getArcSin(1)));
+        Assert.assertEquals("Wrong result for x = -1 (left border)", df.format(Math.asin(-1)), df.format(ArcSinFunction.getArcSin(-1)));
     }
 
     @Test
     public void testLinear() {
-        testWithValue(-0.3);
-        testWithValue(0.3);
-        testWithValue(-0.5);
-        testWithValue(0.5);
+        Assert.assertEquals("Wrong result for x = 0.3 (linear growth)", df.format(Math.asin(0.3)), df.format(ArcSinFunction.getArcSin(0.3)));
+        Assert.assertEquals("Wrong result for x = -0.3 (linear growth)", df.format(Math.asin(-0.3)), df.format(ArcSinFunction.getArcSin(-0.3)));
+        Assert.assertEquals("Wrong result for x = 0.5 (linear growth)", df.format(Math.asin(0.5)), df.format(ArcSinFunction.getArcSin(0.5)));
+        Assert.assertEquals("Wrong result for x = -0.5 (linear growth)", df.format(Math.asin(-0.5)), df.format(ArcSinFunction.getArcSin(-0.5)));
     }
 
     @Test
     public void testExponential() {
-        testWithValue(-0.97);
-        testWithValue(0.97);
+        Assert.assertEquals("Wrong result for x = 0.97 (exponential growth)", df.format(Math.asin(0.97)), df.format(ArcSinFunction.getArcSin(0.97)));
+        Assert.assertEquals("Wrong result for x = -0.97 (exponential growth)", df.format(Math.asin(-0.97)), df.format(ArcSinFunction.getArcSin(-0.97)));
     }
 
     @Test
     public void testOutOfBounds() {
-        testAssertNaN(-2);
-        testAssertNaN(2);
-    }
-
-    private void testAssertNaN(double x) {
-        Double result = ArcSinFunction.getArcSin(x);
-        Assert.assertTrue("Result should be NaN for x = " + x, Double.isNaN(result));
-    }
-
-    private void testWithValue(double x) {
-        String expected = df.format(Math.asin(x));
-        String actual = df.format(ArcSinFunction.getArcSin(x));
-        Assert.assertEquals("Wrong result for x = " + x, expected, actual);
+        Assert.assertTrue("Result should be NaN for x = -2", Double.isNaN(ArcSinFunction.getArcSin(-2)));
+        Assert.assertTrue("Result should be NaN for x = 2", Double.isNaN(ArcSinFunction.getArcSin(2)));
     }
 }
