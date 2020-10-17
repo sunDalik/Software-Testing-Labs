@@ -25,7 +25,7 @@ public class SinFunctionTest {
             "0.52359877559, NaN, NaN",
             "0.78539816339, Infinity, NaN",
             "1.57079632679, -Infinity, NaN"})
-    public void testSinNegative(double x, double epsp, double sin) {
+    public void testSinNegative(double x, double eps, double sin) {
         Assertions.assertEquals(sin, SinFunction.sin(x, eps));
     }
 }
