@@ -15,7 +15,7 @@ public class SinFunctionTest {
             "-3.14159265359, 0"})
     public void testSin(double x, double sin) {
         double precision = 1e-6;
-        Assertions.assertEquals(sin, SinFunction.getSin(x, precision), precision);
+        Assertions.assertEquals(sin, SinFunction.sin(x, precision), precision);
     }
 
     @ParameterizedTest
@@ -26,6 +26,6 @@ public class SinFunctionTest {
             "0.78539816339, Infinity, NaN",
             "1.57079632679, -Infinity, NaN"})
     public void testSinNegative(double x, double precision, double sin) {
-        Assertions.assertEquals(sin, SinFunction.getSin(x, precision));
+        Assertions.assertEquals(sin, SinFunction.sin(x, precision));
     }
 }

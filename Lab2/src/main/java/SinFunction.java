@@ -1,5 +1,5 @@
 public class SinFunction {
-    public static Double getSin(double x, double precision) {
+    public static Double sin(double x, double precision) {
         if (Double.isInfinite(x) || Double.isNaN(x) || Double.isInfinite(precision) || Double.isNaN(precision)) {
             return Double.NaN;
         }

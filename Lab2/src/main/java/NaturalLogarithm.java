@@ -1,5 +1,5 @@
 public class NaturalLogarithm {
-    public static Double getNaturalLogarithm(double x, double precision) {
+    public static Double ln(double x, double precision) {
         if (x <= 0 || Double.isNaN(x) || Double.isInfinite(precision) || Double.isNaN(precision)) {
             return Double.NaN;
         }
