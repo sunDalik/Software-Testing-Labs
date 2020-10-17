@@ -1,6 +1,6 @@
 public class EquationSystem {
 
-    public Double solve(double x) {
+    public Double solve(double x, double eps) {
         if (x <= 0) {
 
         } else {
