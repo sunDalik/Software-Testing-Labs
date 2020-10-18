@@ -27,6 +27,40 @@ public class TrigonometryEvaluatorTest {
 
             Assertions.assertEquals(sin, trigonometryEvaluator.sin(x, EPS), EPS);
         }
+
+        @ParameterizedTest
+        @CsvFileSource(resources = "/trigonometry_test.csv", numLinesToSkip = 1)
+        void testSec(Double x, Double sin, Double sec, Double csc, Double cot, Double cos) {
+            when(mock.sin(eq(x + Math.PI / 2), Mockito.anyDouble())).thenReturn(cos);
+
+            Assertions.assertEquals(sec, trigonometryEvaluator.sec(x, EPS), EPS);
+        }
+
+        @ParameterizedTest
+        @CsvFileSource(resources = "/trigonometry_test.csv", numLinesToSkip = 1)
+        void testCsc(Double x, Double sin, Double sec, Double csc, Double cot, Double cos) {
+            when(mock.sin(eq(x), Mockito.anyDouble())).thenReturn(sin);
+
+            Assertions.assertEquals(csc, trigonometryEvaluator.csc(x, EPS), EPS);
+        }
+
+        @ParameterizedTest
+        @CsvFileSource(resources = "/trigonometry_test.csv", numLinesToSkip = 1)
+        void testCot(Double x, Double sin, Double sec, Double csc, Double cot, Double cos) {
+            when(mock.sin(eq(x), Mockito.anyDouble())).thenReturn(sin);
+            when(mock.sin(eq(x + Math.PI / 2), Mockito.anyDouble())).thenReturn(cos);
+
+            Assertions.assertEquals(cot, trigonometryEvaluator.cot(x, EPS), EPS);
+        }
+
+        @ParameterizedTest
+        @CsvFileSource(resources = "/trigonometry_test.csv", numLinesToSkip = 1)
+        void testCos(Double x, Double sin, Double sec, Double csc, Double cot, Double cos) {
+            when(mock.sin(eq(x + Math.PI / 2), Mockito.anyDouble())).thenReturn(cos);
+
+            Assertions.assertEquals(cos, trigonometryEvaluator.cos(x, EPS), EPS);
+        }
+
     }
 
     @Nested
