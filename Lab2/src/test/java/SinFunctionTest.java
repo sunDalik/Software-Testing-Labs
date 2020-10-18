@@ -6,7 +6,8 @@ public class SinFunctionTest {
 
 
     @ParameterizedTest
-    @CsvSource({"3.14159265359, 0",
+    @CsvSource({"6.28318530718, 0",
+            "3.14159265359, 0",
             "1.57079632679, 1",
             "0.78539816339, 0.70710678118",
             "0.52359877559, 0.5",
@@ -14,7 +15,8 @@ public class SinFunctionTest {
             "-0.78539816339, -0.70710678118",
             "-0.52359877559, -0.5",
             "-1.57079632679, -1",
-            "-3.14159265359, 0"})
+            "-3.14159265359, 0",
+            "-6.28318530718, 0"})
     public void testSin(Double x, Double sin) {
         double eps = 1e-6;
         Assertions.assertEquals(sin, new SinFunction().sin(x, eps), eps);
