@@ -3,6 +3,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class SinFunctionTest {
+
+
     @ParameterizedTest
     @CsvSource({"3.14159265359, 0",
             "1.57079632679, 1",
@@ -15,7 +17,7 @@ public class SinFunctionTest {
             "-3.14159265359, 0"})
     public void testSin(Double x, Double sin) {
         double eps = 1e-6;
-        Assertions.assertEquals(sin, SinFunction.sin(x, eps), eps);
+        Assertions.assertEquals(sin, new SinFunction().sin(x, eps), eps);
     }
 
     @ParameterizedTest
@@ -26,6 +28,6 @@ public class SinFunctionTest {
             "0.78539816339, Infinity, NaN",
             "1.57079632679, -Infinity, NaN"})
     public void testSinNegative(Double x, Double eps, Double sin) {
-        Assertions.assertEquals(sin, SinFunction.sin(x, eps));
+        Assertions.assertEquals(sin, new SinFunction().sin(x, eps));
     }
 }

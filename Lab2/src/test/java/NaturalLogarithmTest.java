@@ -14,7 +14,7 @@ public class NaturalLogarithmTest {
             "Infinity, Infinity"})
     public void testLn(Double x, Double ln) {
         double eps = 1e-6;
-        Assertions.assertEquals(ln, NaturalLogarithm.ln(x, eps), eps);
+        Assertions.assertEquals(ln, new NaturalLogarithm().ln(x, eps), eps);
     }
 
     @ParameterizedTest
@@ -25,6 +25,6 @@ public class NaturalLogarithmTest {
             "3, Infinity, NaN",
             "5, -Infinity, NaN"})
     public void testLnNegative(Double x, Double eps, Double ln) {
-        Assertions.assertEquals(ln, NaturalLogarithm.ln(x, eps));
+        Assertions.assertEquals(ln, new NaturalLogarithm().ln(x, eps));
     }
 }

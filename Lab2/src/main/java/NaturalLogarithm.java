@@ -1,5 +1,5 @@
-public class NaturalLogarithm {
-    public static Double ln(double x, double eps) {
+public class NaturalLogarithm implements INaturalLogarithm {
+    public Double ln(double x, double eps) {
         if (x <= 0 || Double.isNaN(x) || Double.isInfinite(eps) || Double.isNaN(eps)) {
             return Double.NaN;
         }

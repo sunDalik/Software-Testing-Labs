@@ -1,12 +1,18 @@
-public class LogarithmEvaluator {
-    public static Double ln(double x, double eps) {
-        return NaturalLogarithm.ln(x, eps);
+public class LogarithmEvaluator implements ILogarithmEvaluator {
+    private INaturalLogarithm baseLog;
+
+    public LogarithmEvaluator(INaturalLogarithm baseLog) {
+        this.baseLog = baseLog;
     }
 
-    public static Double log(double x, double base, double eps) {
+    public Double ln(double x, double eps) {
+        return baseLog.ln(x, eps);
+    }
+
+    public Double log(double x, double base, double eps) {
         if (x <= 0 || base <= 0 || base == 1 || Double.isNaN(x) || Double.isNaN(base) || Double.isNaN(eps) || Double.isInfinite(base) || Double.isInfinite(eps) || Double.isInfinite(x)) {
             return Double.NaN;
         }
-        return NaturalLogarithm.ln(x, eps) / NaturalLogarithm.ln(base, eps);
+        return baseLog.ln(x, eps) / baseLog.ln(base, eps);
     }
 }

@@ -1,5 +1,5 @@
-public class SinFunction {
-    public static Double sin(double x, double eps) {
+public class SinFunction implements ISinFunction {
+    public Double sin(double x, double eps) {
         if (Double.isInfinite(x) || Double.isNaN(x) || Double.isInfinite(eps) || Double.isNaN(eps)) {
             return Double.NaN;
         }
