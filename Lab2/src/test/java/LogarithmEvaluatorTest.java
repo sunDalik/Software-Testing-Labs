@@ -16,4 +16,11 @@ public class LogarithmEvaluatorTest {
     public void testLog(Double x, Double base, Double lnX, Double lnBase, Double logBaseX) {
         Assertions.assertEquals(logBaseX, LogarithmEvaluator.log(x, base, EPS), EPS);
     }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/logarithm_test_negative.csv", numLinesToSkip = 1)
+    public void testNegative(Double x, Double base, Double lnX, Double lnBase, Double logBaseX, Double eps) {
+        Assertions.assertEquals(lnX, LogarithmEvaluator.ln(x, eps), EPS);
+        Assertions.assertEquals(logBaseX, LogarithmEvaluator.log(x, base, eps), EPS);
+    }
 }

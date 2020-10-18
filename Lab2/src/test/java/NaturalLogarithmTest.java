@@ -18,9 +18,9 @@ public class NaturalLogarithmTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"0, 1e-6,NaN",
-            "-5, 1e-6,NaN",
-            "-Infinity, 1e-6,NaN",
+    @CsvSource({"0, 1e-6, NaN",
+            "-5, 1e-6, NaN",
+            "-Infinity, 1e-6, NaN",
             "2, NaN, NaN",
             "3, Infinity, NaN",
             "5, -Infinity, NaN"})

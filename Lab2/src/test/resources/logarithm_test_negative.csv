@@ -1,0 +1,14 @@
+x, base, lnX, lnBase, logBaseX, eps
+10, 10, NaN, NaN, NaN, NaN
+10, 10, NaN, NaN, NaN, Infinity
+10, 10, NaN, NaN, NaN, -Infinity
+10, NaN, 2.30258509299, NaN, NaN, 1e-6
+NaN, 10, NaN, 2.30258509299, NaN, 1e-6
+10, 0, 2.30258509299, NaN, NaN, 1e-6
+10, -10, 2.30258509299, NaN, NaN, 1e-6
+10, -Infinity, 2.30258509299, NaN, NaN, 1e-6
+10, 1, 2.30258509299, 0, NaN, 1e-6
+-10, 10, NaN, 2.30258509299, NaN, 1e-6
+-Infinity, 10, NaN, 2.30258509299, NaN, 1e-6
+10, Infinity, 2.30258509299, Infinity, NaN, 1e-6
+Infinity, 10, Infinity, 2.30258509299, NaN, 1e-6
