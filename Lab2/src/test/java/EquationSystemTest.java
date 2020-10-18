@@ -9,8 +9,8 @@ public class EquationSystemTest {
     public ILogarithmEvaluator getLogarithmEvaluatorStub(Double x, Double ln, Double log3, Double log10) {
         ILogarithmEvaluator logarithmStub = Mockito.mock(ILogarithmEvaluator.class);
         Mockito.when(logarithmStub.ln(Mockito.eq(x), Mockito.anyDouble())).thenReturn(ln);
-        Mockito.when(logarithmStub.log(Mockito.eq(x), Mockito.eq(3), Mockito.anyDouble())).thenReturn(log3);
-        Mockito.when(logarithmStub.log(Mockito.eq(x), Mockito.eq(10), Mockito.anyDouble())).thenReturn(log10);
+        Mockito.when(logarithmStub.log(Mockito.eq(x), Mockito.eq(3.0), Mockito.anyDouble())).thenReturn(log3);
+        Mockito.when(logarithmStub.log(Mockito.eq(x), Mockito.eq(10.0), Mockito.anyDouble())).thenReturn(log10);
         return logarithmStub;
     }
 
