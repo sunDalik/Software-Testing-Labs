@@ -1,0 +1,7 @@
+x, eps, y
+NaN, 1e-6, NaN
+Infinity, 1e-6, NaN
+-Infinity, 1e-6, NaN
+2, NaN, NaN
+3, Infinity, NaN
+-4, -Infinity, NaN

@@ -55,4 +55,11 @@ public class EquationSystemTest {
         EquationSystem equationSystem = new EquationSystem(new TrigonometryEvaluator(new SinFunction()), new LogarithmEvaluator(new NaturalLogarithm()));
         Assertions.assertEquals(y, equationSystem.solve(x, EPS), EPS);
     }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/equation_system_test_negative.csv", numLinesToSkip = 1)
+    public void testEquationSystemNegative(Double x, Double eps, Double y) {
+        EquationSystem equationSystem = new EquationSystem(new TrigonometryEvaluator(new SinFunction()), new LogarithmEvaluator(new NaturalLogarithm()));
+        Assertions.assertEquals(y, equationSystem.solve(x, eps));
+    }
 }

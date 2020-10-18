@@ -7,7 +7,10 @@ public class EquationSystem {
         this.logarithmEvaluator = logarithmEvaluator;
     }
 
-    public Double solve(double x, double eps) {
+    public Double solve(Double x, Double eps) {
+        if (x.isInfinite() || x.isNaN() || eps.isInfinite() || eps.isNaN()) {
+            return Double.NaN;
+        }
         if (x <= 0) {
             double csc = trigonometryEvaluator.csc(x, eps);
             double sin = trigonometryEvaluator.sin(x, eps);
