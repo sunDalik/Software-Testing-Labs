@@ -61,6 +61,20 @@ public class TrigonometryEvaluatorTest {
             Assertions.assertEquals(cos, trigonometryEvaluator.cos(x, EPS), EPS);
         }
 
+        @ParameterizedTest
+        @CsvFileSource(resources = "/trigonometry_test_negative.csv", numLinesToSkip = 1)
+        void testNegative(Double x, Double eps, Double sin, Double sec, Double csc, Double cot, Double cos) {
+            when(mock.sin(eq(x), Mockito.doubleThat(e -> e.isInfinite() || e.isNaN()))).thenReturn(Double.NaN);
+            when(mock.sin(eq(x), Mockito.doubleThat(e -> !e.isInfinite() && !e.isNaN()))).thenReturn(sin);
+            when(mock.sin(eq(x + Math.PI / 2), Mockito.doubleThat(e -> e.isInfinite() || e.isNaN()))).thenReturn(Double.NaN);
+            when(mock.sin(eq(x + Math.PI / 2), Mockito.doubleThat(e -> !e.isInfinite() && !e.isNaN()))).thenReturn(cos);
+
+            Assertions.assertEquals(sin, trigonometryEvaluator.sin(x, eps));
+            Assertions.assertEquals(sec, trigonometryEvaluator.sec(x, eps));
+            Assertions.assertEquals(csc, trigonometryEvaluator.csc(x, eps));
+            Assertions.assertEquals(cot, trigonometryEvaluator.cot(x, eps));
+            Assertions.assertEquals(cos, trigonometryEvaluator.cos(x, eps));
+        }
     }
 
     @Nested
