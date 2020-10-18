@@ -30,7 +30,7 @@ public class TrigonometryEvaluator implements ITrigonometryEvaluator{
         return cos(x, eps) / sin(x, eps);
     }
 
-    private Double cos(double x, double eps) {
+    public Double cos(double x, double eps) {
         return baseFunction.sin(Math.PI / 2 + x, eps);
     }
 }

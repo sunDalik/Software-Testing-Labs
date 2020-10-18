@@ -6,4 +6,6 @@ public interface ITrigonometryEvaluator {
     Double csc(double x, double eps);
 
     Double cot(double x, double eps);
+
+    Double cos(double x, double eps);
 }
