@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class SinFunctionTest {
@@ -13,7 +14,7 @@ public class SinFunctionTest {
             "-0.52359877559, -0.5",
             "-1.57079632679, -1",
             "-3.14159265359, 0"})
-    public void testSin(double x, double sin) {
+    public void testSin(Double x, Double sin) {
         double eps = 1e-6;
         Assertions.assertEquals(sin, SinFunction.sin(x, eps), eps);
     }
@@ -25,7 +26,7 @@ public class SinFunctionTest {
             "0.52359877559, NaN, NaN",
             "0.78539816339, Infinity, NaN",
             "1.57079632679, -Infinity, NaN"})
-    public void testSinNegative(double x, double eps, double sin) {
+    public void testSinNegative(Double x, Double eps, Double sin) {
         Assertions.assertEquals(sin, SinFunction.sin(x, eps));
     }
 }

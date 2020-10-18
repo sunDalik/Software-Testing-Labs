@@ -6,7 +6,7 @@ public class SinFunction {
         double sum = 0.0;
         double term = x;
         int n = 1;
-        while (Math.abs(term) > eps) {
+        while (Math.abs(term) > eps / 10) {
             sum += term;
             term *= -Math.pow(x, 2) / ((2 * n) * (2 * n + 1));
             n++;

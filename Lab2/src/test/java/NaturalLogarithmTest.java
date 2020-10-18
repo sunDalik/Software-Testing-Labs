@@ -12,7 +12,7 @@ public class NaturalLogarithmTest {
             "0.2, -1.60943791243",
             "0.05, -2.99573227355",
             "Infinity, Infinity"})
-    public void testLn(double x, double ln) {
+    public void testLn(Double x, Double ln) {
         double eps = 1e-6;
         Assertions.assertEquals(ln, NaturalLogarithm.ln(x, eps), eps);
     }
@@ -24,7 +24,7 @@ public class NaturalLogarithmTest {
             "2, NaN, NaN",
             "3, Infinity, NaN",
             "5, -Infinity, NaN"})
-    public void testLnNegative(double x, double eps, double ln) {
+    public void testLnNegative(Double x, Double eps, Double ln) {
         Assertions.assertEquals(ln, NaturalLogarithm.ln(x, eps));
     }
 }
