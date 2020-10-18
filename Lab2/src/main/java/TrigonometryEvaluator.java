@@ -4,21 +4,21 @@ public class TrigonometryEvaluator {
     }
 
     public static Double sec(double x, double eps) {
-        if (Math.abs(cos(x, eps) - 0) < eps) {
+        if (Math.abs(cos(x, eps) - 0) < eps || Double.isNaN(cos(x, eps))) {
             return Double.NaN;
         }
         return 1 / cos(x, eps);
     }
 
     public static Double csc(double x, double eps) {
-        if (Math.abs(sin(x, eps) - 0) < eps) {
+        if (Math.abs(sin(x, eps) - 0) < eps || Double.isNaN(sin(x, eps))) {
             return Double.NaN;
         }
         return 1 / sin(x, eps);
     }
 
     public static Double cot(double x, double eps) {
-        if (Math.abs(sin(x, eps) - 0) < eps) {
+        if (Math.abs(sin(x, eps) - 0) < eps || Double.isNaN(cos(x, eps)) || Double.isNaN(sin(x, eps))) {
             return Double.NaN;
         }
         return cos(x, eps) / sin(x, eps);
