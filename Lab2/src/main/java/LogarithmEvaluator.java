@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class LogarithmEvaluator implements ILogarithmEvaluator {
     private INaturalLogarithm baseLog;
 
@@ -14,5 +17,23 @@ public class LogarithmEvaluator implements ILogarithmEvaluator {
             return Double.NaN;
         }
         return baseLog.ln(x, eps) / baseLog.ln(base, eps);
+    }
+
+    public boolean writeToCSV(String fileName, double leftBound, double rightBound, double step, double eps) {
+        PrintWriter pw;
+        try {
+            pw = new PrintWriter(fileName);
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+        pw.write("x,ln,log3,log10\n");
+        double x = leftBound;
+        while (x <= rightBound) {
+            pw.append(String.format("%s,%s,%s,%s\n", x, ln(x, eps), log(x, 3, eps), log(x, 10, eps)));
+            x += step;
+        }
+        pw.flush();
+        pw.close();
+        return true;
     }
 }
