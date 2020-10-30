@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import utils.Credentials;
 import utils.DriverProvider;
 
 public class LoginTest {
@@ -7,5 +9,22 @@ public class LoginTest {
     public void loginTest() {
         WebDriver driver = DriverProvider.getDriver();
         driver.get("https://timeweb.com");
+        String mainPageWindowHandle = driver.getWindowHandle();
+
+        driver.findElement(By.xpath("//a[@href='https://hosting.timeweb.ru/']")).click();
+        // switch to a new login tab (you can find it by comparing it to out main page tab)
+        for (String windowHandle : driver.getWindowHandles()) {
+            if (!mainPageWindowHandle.equalsIgnoreCase(windowHandle)) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
+
+        driver.findElement(By.xpath("//html//input[@name='LoginForm[username]']")).click();
+        driver.findElement(By.xpath("//input[@name='LoginForm[username]']")).sendKeys(Credentials.login);
+        driver.findElement(By.xpath("//input[@name='LoginForm[password]']")).click();
+        driver.findElement(By.xpath("//input[@name='LoginForm[password]']")).sendKeys(Credentials.password);
+        driver.findElement(By.xpath("//button[@name='login-button']")).click();
+        driver.quit();
     }
 }

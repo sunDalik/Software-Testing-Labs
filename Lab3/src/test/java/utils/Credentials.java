@@ -4,8 +4,8 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class Credentials {
-    static String login;
-    static String password;
+    public static String login;
+    public static String password;
 
     static {
         InputStream inputStream = Credentials.class.getClassLoader().getResourceAsStream("credentials");
