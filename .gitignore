@@ -6,3 +6,4 @@ gradlew.bat
 .gradle/
 target/
 lab2/csv
+credentials
