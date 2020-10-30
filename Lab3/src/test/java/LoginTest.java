@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,11 +21,10 @@ public class LoginTest {
             }
         }
 
-        driver.findElement(By.xpath("//html//input[@name='LoginForm[username]']")).click();
         driver.findElement(By.xpath("//input[@name='LoginForm[username]']")).sendKeys(Credentials.login);
-        driver.findElement(By.xpath("//input[@name='LoginForm[password]']")).click();
         driver.findElement(By.xpath("//input[@name='LoginForm[password]']")).sendKeys(Credentials.password);
         driver.findElement(By.xpath("//button[@name='login-button']")).click();
+        Assertions.assertEquals(Credentials.login, driver.findElement(By.xpath("//p[@class='acc-name js-acc-name']")).getText());
         driver.quit();
     }
 }
