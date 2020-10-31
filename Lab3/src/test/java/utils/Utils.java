@@ -1,5 +1,8 @@
 package utils;
 
+import org.openqa.selenium.WebElement;
+
+import java.util.Arrays;
 import java.util.Random;
 
 public class Utils {
@@ -23,5 +26,9 @@ public class Utils {
 
     public static String getRandomEmail(int length) {
         return getRandomAlphaNumericSequence(length) + "@" + getRandomAlphabetSequence(4) + "." + getRandomAlphabetSequence(3);
+    }
+
+    public static boolean elementHasClass(WebElement element, String className) {
+        return Arrays.asList(element.getAttribute("class").split(" ")).contains(className);
     }
 }
