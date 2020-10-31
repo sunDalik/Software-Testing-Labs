@@ -1,37 +1,23 @@
 package utils;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.io.InputStream;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-enum DRIVER_TYPE {
-    CHROME,
-    FIREFOX
-}
-
 public class DriverProvider {
-    private static DRIVER_TYPE driverType;
+    private static DriverType driverType = DriverType.CHROME;
 
     static {
-        InputStream inputStream = Credentials.class.getClassLoader().getResourceAsStream("driver");
-        Scanner s = new Scanner(inputStream).useDelimiter("\n");
-        String driverTypeString = s.next();
-        if (driverTypeString.toLowerCase().equals("firefox")) {
-            driverType = DRIVER_TYPE.FIREFOX;
-        } else {
-            driverType = DRIVER_TYPE.CHROME;
-        }
-        System.setProperty("webdriver.chrome.driver", s.next());
-        System.setProperty("webdriver.gecko.driver", s.next());
+        WebDriverManager.chromedriver().setup();
+        WebDriverManager.firefoxdriver().setup();
     }
 
     public static WebDriver getDriver() {
         WebDriver driver;
-        if (driverType == DRIVER_TYPE.FIREFOX) {
+        if (driverType == DriverType.FIREFOX) {
             driver = new FirefoxDriver();
         } else {
             driver = new ChromeDriver();
