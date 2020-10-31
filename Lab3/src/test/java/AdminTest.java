@@ -25,6 +25,9 @@ public class AdminTest {
         // check that our new admin is put in the last row of the admin table
         WebElement newAdminNameCell = driver.findElement(By.xpath("//div[@id='w0']/table/tbody/tr[last()]/td[1]"));
         Assertions.assertEquals(adminName, newAdminNameCell.getText());
+
+        adminPage.deleteAdmin(adminName);
+        new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBe(By.xpath("//div[@id='w0']/table/tbody/tr"), adminTableRowsCount));
         driver.quit();
     }
 }

@@ -1,6 +1,7 @@
 package webpages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -60,13 +61,13 @@ public class AdministratorsPage {
         createButton.click();
 
         WebElement okButton = driver.findElement(By.xpath("//div[@class='js-region-administrator']//button[@class='tw-button-primary js-btn']"));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(okButton).click().perform();
+        new Actions(driver).moveToElement(okButton).click().perform();
 
         return surname + " " + name + " " + patronymic;
     }
 
     public void deleteAdmin(String fullName) {
-
+        driver.findElement(By.xpath("//button[@data-person-name='" + fullName + "']")).click();
+        driver.findElement(By.xpath("//button[@class='cpS-btn-warning js-confirm']")).sendKeys(Keys.RETURN);;
     }
 }
