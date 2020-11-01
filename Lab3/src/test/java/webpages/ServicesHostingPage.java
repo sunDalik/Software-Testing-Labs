@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import utils.Profile;
+import utils.ProfileStruct;
 import utils.Utils;
 
 public class ServicesHostingPage {
@@ -34,7 +34,7 @@ public class ServicesHostingPage {
         this.driver = driver;
     }
 
-    public Profile registerRandom() {
+    public ProfileStruct registerRandom() {
         registrationButton.click();
         String name = Utils.getRandomAlphabetSequence(10);
         String email = Utils.getRandomEmail(8).toLowerCase();
@@ -44,6 +44,6 @@ public class ServicesHostingPage {
         specifyUsernameButton.click();
         registrationUsernameInput.sendKeys(username);
         registrationSubmitButton.click();
-        return new Profile(name, email, username);
+        return new ProfileStruct(name, email, username);
     }
 }

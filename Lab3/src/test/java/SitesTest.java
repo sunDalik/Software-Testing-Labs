@@ -11,7 +11,7 @@ import webpages.SitesPage;
 
 public class SitesTest {
     @Test
-    public void createSite() {
+    public void createSiteTest() {
         WebDriver driver = DriverProvider.getDriver();
         new LoginPage(driver, true).loginAndWait();
 
