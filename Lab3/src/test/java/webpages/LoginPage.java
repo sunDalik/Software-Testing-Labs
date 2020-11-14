@@ -18,6 +18,9 @@ public class LoginPage {
     @FindBy(xpath = "//button[@name='login-button']")
     public WebElement submitButton;
 
+    @FindBy(xpath = "//div[@class='login-page__error-message']/div")
+    public WebElement errorBox;
+
     public LoginPage(WebDriver driver, boolean gotoPage) {
         if (gotoPage) driver.get("https://hosting.timeweb.ru");
         PageFactory.initElements(driver, this);

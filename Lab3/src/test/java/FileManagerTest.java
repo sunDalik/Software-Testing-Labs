@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +11,7 @@ import webpages.FileManagerPage;
 import webpages.LoginPage;
 
 public class FileManagerTest {
-    @RepeatedTest(20)
+    @Test
     public void createFileTest() {
         WebDriver driver = DriverProvider.getDriver();
         new LoginPage(driver, true).loginAndWait();

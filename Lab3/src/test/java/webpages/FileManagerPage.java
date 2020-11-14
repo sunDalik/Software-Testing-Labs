@@ -89,10 +89,11 @@ public class FileManagerPage {
     public String getFileContents(String fileName) {
         WebElement fileNameDiv = driver.findElement(By.xpath("//div[normalize-space()='" + fileName + "']"));
         WebElement fileRow = fileNameDiv.findElement(By.xpath("./../.."));
-        Utils.jsClick(driver, fileRow);
-        fileActionsButton.click();
-        WebElement editFileButton = driver.findElement(By.xpath("//div[@class='ui-tooltip-content']/div[@id='div_actions_file__redactor']"));
-        editFileButton.click();
+        new Actions(driver).doubleClick(fileRow).perform();
+        //Utils.jsClick(driver, fileRow);
+        //fileActionsButton.click();
+        //WebElement editFileButton = driver.findElement(By.xpath("//div[@class='ui-tooltip-content']/div[@id='div_actions_file__redactor']"));
+        //editFileButton.click();
 
         new WebDriverWait(driver, 10).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
         Actions actions = new Actions(driver);
