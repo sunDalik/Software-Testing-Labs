@@ -32,9 +32,22 @@ public class RegistrationTest {
         WebDriver driver = DriverProvider.getDriver();
         ServicesHostingPage servicesHostingPage = new ServicesHostingPage(driver, true);
         String name = Utils.getRandomAlphabetSequence(10);
-        String email = Utils.getRandomEmail(8).toLowerCase();
+        String email = Utils.getRandomEmail(8);
         // username must be 5-10 letters long
-        String username = Utils.getRandomAlphaNumericSequence(4).toLowerCase();
+        String username = Utils.getRandomAlphaNumericSequence(4);
+        servicesHostingPage.registerUser(name, email, username);
+
+        Assertions.assertTrue(Utils.isAlertPresent(driver));
+    }
+
+    @Test
+    public void invalidEmailRegistrationTest() {
+        WebDriver driver = DriverProvider.getDriver();
+        ServicesHostingPage servicesHostingPage = new ServicesHostingPage(driver, true);
+        String name = Utils.getRandomAlphabetSequence(10);
+        // it shouldn't allow registering emails of wrong format
+        String email = Utils.getRandomAlphaNumericSequence(10);
+        String username = Utils.getRandomAlphaNumericSequence(10).toLowerCase();
         servicesHostingPage.registerUser(name, email, username);
 
         Assertions.assertTrue(Utils.isAlertPresent(driver));
