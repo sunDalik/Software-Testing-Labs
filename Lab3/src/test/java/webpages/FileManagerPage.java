@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.FileStruct;
 import utils.Utils;
 
-import javax.rmi.CORBA.Util;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -28,6 +27,8 @@ public class FileManagerPage {
     }
 
     public FileStruct createRandomFile() {
+        int filesTableRowsCount = driver.findElements(By.xpath("//div[@id='main_table']//table/tbody/tr")).size();
+
         fileActionsButton.click();
         WebElement newFileButton = driver.findElement(By.xpath("//div[@class='ui-tooltip-content']/div[@id='div_actions_file__new']"));
         newFileButton.click();
@@ -49,33 +50,25 @@ public class FileManagerPage {
             }
         }
 
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre")));
+        waitLoading();
+        clickIntoFileEditor();
         Actions actions = new Actions(driver);
-        try {
-            WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
-            actions.click(fileContentsInput).perform();
-        } catch (StaleElementReferenceException e) {
-            WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
-            actions.click(fileContentsInput).perform();
-        }
         actions.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.DELETE).perform();
 
         String contents = Utils.getRandomAlphaNumericSequence(10) + "\n" + Utils.getRandomAlphaNumericSequence(15) + "\n" + Utils.getRandomAlphaNumericSequence(30);
         actions.sendKeys(contents).perform();
+        saveCurrentFile();
 
-        WebElement fileContentsSaveButton = driver.findElement(By.xpath("//div[@class='form-actions file-redactor-form__row']/button"));
-        fileContentsSaveButton.click();
-
-        WebElement fileContentsCloseButton = driver.findElement(By.xpath("//div[@aria-describedby='file_redactor_dialog_2']/div[1]/button"));
-        Utils.jsClick(driver, fileContentsCloseButton);
+        // wait until new entry is put in the files table
+        new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBe(By.xpath("//div[@id='main_table']//table/tbody/tr"), filesTableRowsCount + 1));
 
         return new FileStruct(filename + ".html", contents);
     }
 
     public void deleteFile(String fileName) {
-        WebElement fileNameDiv = driver.findElement(By.xpath("//div[normalize-space()='" + fileName + "']"));
-        WebElement fileRow = fileNameDiv.findElement(By.xpath("./../.."));
-        Utils.jsClick(driver, fileRow);
+        int filesTableRowsCount = driver.findElements(By.xpath("//div[@id='main_table']//table/tbody/tr")).size();
+
+        Utils.jsClick(driver, getFileNameCell(fileName));
 
         Utils.jsClick(driver, fileActionsButton);
         WebElement deleteFileButton = driver.findElement(By.xpath("//div[@class='ui-tooltip-content']/div[@id='div_actions_file__select_delete']"));
@@ -84,26 +77,14 @@ public class FileManagerPage {
         new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         alert.accept();
+        new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBe(By.xpath("//div[@id='main_table']//table/tbody/tr"), filesTableRowsCount));
     }
 
     public String getFileContents(String fileName) {
-        WebElement fileNameDiv = driver.findElement(By.xpath("//div[normalize-space()='" + fileName + "']"));
-        WebElement fileRow = fileNameDiv.findElement(By.xpath("./../.."));
-        new Actions(driver).doubleClick(fileRow).perform();
-        //Utils.jsClick(driver, fileRow);
-        //fileActionsButton.click();
-        //WebElement editFileButton = driver.findElement(By.xpath("//div[@class='ui-tooltip-content']/div[@id='div_actions_file__redactor']"));
-        //editFileButton.click();
-
-        new WebDriverWait(driver, 10).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
         Actions actions = new Actions(driver);
-        try {
-            WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
-            actions.click(fileContentsInput).perform();
-        } catch (StaleElementReferenceException e) {
-            WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
-            actions.click(fileContentsInput).perform();
-        }
+        actions.doubleClick(getFileNameCell(fileName)).perform();
+        waitLoading();
+        clickIntoFileEditor();
         actions.keyDown(Keys.CONTROL).sendKeys("a").sendKeys("c").keyUp(Keys.CONTROL).perform();
 
         String contents = "";
@@ -116,5 +97,62 @@ public class FileManagerPage {
         Utils.jsClick(driver, fileContentsCloseButton);
 
         return contents;
+    }
+
+    public WebElement getFileNameCell(String fileName) {
+        return driver.findElement(By.xpath("//div[@id='main_table']//table/tbody/tr/td[2]/div[normalize-space()='" + fileName + "']"));
+    }
+
+    public void navigateTo(String[] path) {
+        navigateToHome();
+        Actions actions = new Actions(driver);
+        for (String dir : path) {
+            actions.doubleClick(getFileNameCell(dir)).perform();
+            waitLoading();
+        }
+    }
+
+    public void writeToFile(String fileName, String contents) {
+        Actions actions = new Actions(driver);
+        actions.doubleClick(getFileNameCell(fileName)).perform();
+        waitLoading();
+
+        clickIntoFileEditor();
+        actions.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.DELETE).perform();
+        actions.sendKeys(contents).perform();
+        saveCurrentFile();
+    }
+
+    public void navigateToHome() {
+        WebElement homeButton = driver.findElement(By.xpath("//div[@id='home']"));
+        Utils.jsClick(driver, homeButton);
+        waitLoading();
+    }
+
+    public void waitLoading() {
+        try {
+            new WebDriverWait(driver, 3).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
+        } catch (Exception ignored) {
+        }
+        new WebDriverWait(driver, 10).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
+    }
+
+    public void saveCurrentFile() {
+        WebElement fileContentsSaveButton = driver.findElement(By.xpath("//div[@class='form-actions file-redactor-form__row']/button"));
+        fileContentsSaveButton.click();
+
+        WebElement fileContentsCloseButton = driver.findElement(By.xpath("//div[@role='dialog']/div[1]/button"));
+        Utils.jsClick(driver, fileContentsCloseButton);
+    }
+
+    public void clickIntoFileEditor() {
+        Actions actions = new Actions(driver);
+        try {
+            WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
+            actions.click(fileContentsInput).perform();
+        } catch (StaleElementReferenceException e) {
+            WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
+            actions.click(fileContentsInput).perform();
+        }
     }
 }

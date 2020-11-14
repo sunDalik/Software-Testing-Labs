@@ -9,8 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Utils;
 
-import javax.rmi.CORBA.Util;
-
 public class DomainRegistrationPage {
     WebDriver driver;
 
@@ -50,7 +48,18 @@ public class DomainRegistrationPage {
         } while (Utils.elementHasClass(domainRegistrationButton, "disabled"));
 
         domainRegistrationButton.click();
+
+        WebElement bindingButton = driver.findElement(By.xpath("//div[@class='js-region-binding']//span[@class='tw-link-pseudo']"));
+        bindingButton.click();
+
+        WebElement noBindingOption = driver.findElement(By.xpath("//div[@class='js-region-menu']/div/span[3]"));
+        WebElement saveBindingButton = driver.findElement(By.xpath("//button[@class='tw-button-primary js-save-btn ']"));
+        noBindingOption.click();
+        saveBindingButton.click();
+
         driver.findElement(By.xpath("//button[@class='tw-button-primary domain-registration__submit js-ui-submit']")).click();
+
+        new WebDriverWait(driver, 10).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
 
         return domainName.toLowerCase() + domainZone;
     }

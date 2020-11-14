@@ -23,7 +23,6 @@ public class RegistrationTest {
         ProfilePage profilePage = new ProfilePage(driver, true);
         Assertions.assertEquals(name, profilePage.name.getText());
         Assertions.assertEquals(email, profilePage.email.getText());
-
         driver.quit();
     }
 
@@ -38,6 +37,7 @@ public class RegistrationTest {
         servicesHostingPage.registerUser(name, email, username);
 
         Assertions.assertTrue(Utils.isAlertPresent(driver));
+        driver.quit();
     }
 
     @Test
@@ -51,5 +51,6 @@ public class RegistrationTest {
         servicesHostingPage.registerUser(name, email, username);
 
         Assertions.assertTrue(Utils.isAlertPresent(driver));
+        driver.quit();
     }
 }
