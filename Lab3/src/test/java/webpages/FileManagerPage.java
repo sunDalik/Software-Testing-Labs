@@ -66,8 +66,6 @@ public class FileManagerPage {
     }
 
     public void deleteFile(String fileName) {
-        int filesTableRowsCount = driver.findElements(By.xpath("//div[@id='main_table']//table/tbody/tr")).size();
-
         Utils.jsClick(driver, getFileNameCell(fileName));
 
         Utils.jsClick(driver, fileActionsButton);
@@ -77,7 +75,7 @@ public class FileManagerPage {
         new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         alert.accept();
-        new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBe(By.xpath("//div[@id='main_table']//table/tbody/tr"), filesTableRowsCount));
+        waitLoading();
     }
 
     public String getFileContents(String fileName) {
@@ -141,7 +139,7 @@ public class FileManagerPage {
         WebElement fileContentsSaveButton = driver.findElement(By.xpath("//div[@class='form-actions file-redactor-form__row']/button"));
         fileContentsSaveButton.click();
 
-        WebElement fileContentsCloseButton = driver.findElement(By.xpath("//div[@role='dialog']/div[1]/button"));
+        WebElement fileContentsCloseButton = driver.findElement(By.xpath("//div[@role='dialog' and not(contains(@style,'display: none'))]/div[1]/button"));
         Utils.jsClick(driver, fileContentsCloseButton);
     }
 
