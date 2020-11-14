@@ -34,16 +34,12 @@ public class ServicesHostingPage {
         this.driver = driver;
     }
 
-    public ProfileStruct registerRandom() {
-        registrationButton.click();
-        String name = Utils.getRandomAlphabetSequence(10);
-        String email = Utils.getRandomEmail(8).toLowerCase();
-        String username = Utils.getRandomAlphaNumericSequence(10).toLowerCase();
+    public void registerUser(String name, String email, String username) {
+        Utils.jsClick(driver, registrationButton);
         registrationNameInput.sendKeys(name);
         registrationEmailInput.sendKeys(email);
         specifyUsernameButton.click();
         registrationUsernameInput.sendKeys(username);
         registrationSubmitButton.click();
-        return new ProfileStruct(name, email, username);
     }
 }
