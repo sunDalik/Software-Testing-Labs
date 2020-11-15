@@ -11,11 +11,6 @@ public class FileStruct {
         this.contents = contents;
     }
 
-    public FileStruct(String name, boolean isFolder) {
-        this.name = name;
-        this.isFolder = isFolder;
-    }
-
     public FileStruct(String name, boolean isFolder, long size) {
         this.name = name;
         this.isFolder = isFolder;

@@ -15,7 +15,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class FileManagerPage {
     WebDriver driver;
@@ -35,7 +34,7 @@ public class FileManagerPage {
         this.driver = driver;
     }
 
-    public FileStruct createRandomFile() {
+    public FileStruct createRandomFile(boolean changeContents, String contents) {
         int filesTableRowsCount = driver.findElements(By.xpath("//div[@id='main_table']//table/tbody/tr")).size();
 
         fileActionsButton.click();
@@ -60,18 +59,22 @@ public class FileManagerPage {
         }
 
         waitLoading();
-        clickIntoFileEditor();
-        Actions actions = new Actions(driver);
-        actions.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.DELETE).perform();
-
-        String contents = Utils.getRandomAlphaNumericSequence(10) + "\n" + Utils.getRandomAlphaNumericSequence(15) + "\n" + Utils.getRandomAlphaNumericSequence(30);
-        actions.sendKeys(contents).perform();
+        if (changeContents) {
+            clickIntoFileEditor();
+            Actions actions = new Actions(driver);
+            actions.keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).sendKeys(Keys.DELETE).perform();
+            actions.sendKeys(contents).perform();
+        }
         saveCurrentFile();
 
         // wait until new entry is put in the files table
         new WebDriverWait(driver, 10).until(ExpectedConditions.numberOfElementsToBe(By.xpath("//div[@id='main_table']//table/tbody/tr"), filesTableRowsCount + 1));
 
         return new FileStruct(filename + ".html", contents);
+    }
+
+    public FileStruct createRandomFile() {
+        return createRandomFile(false, "");
     }
 
     public void deleteFile(String fileName) {
@@ -177,7 +180,26 @@ public class FileManagerPage {
             boolean isFolder = Utils.elementHasClass(icon, "icon-folder");
             String fileName = fileRow.findElement(By.xpath("./td[2]/div")).getText();
 
-            files.add(new FileStruct(fileName, isFolder));
+            if (isFolder) {
+                WebElement fileSizeButton = fileRow.findElement(By.xpath("./td[3]/div"));
+                fileSizeButton.click();
+                WebElement loadingIcon = fileRow.findElement(By.xpath("./td[3]/*[local-name() = 'svg']"));
+                new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOf(loadingIcon));
+            }
+
+            String sizeString = fileRow.findElement(By.xpath("./td[3]")).getText();
+            String[] splitStr = sizeString.split("\\s+");
+            float numberSize = Float.parseFloat(splitStr[0]);
+            int size;
+
+            if (splitStr[1].equals("Êב")) {
+                size = (int) (numberSize * 1000);
+            } else if (splitStr[1].equals("Ìב")) {
+                size = (int) (numberSize * 1000 * 1000);
+            } else {
+                size = (int) numberSize;
+            }
+            files.add(new FileStruct(fileName, isFolder, size));
         }
 
         return files;
