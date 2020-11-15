@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.FileStruct;
-import utils.Utils;
+import utils.RndUtils;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
@@ -43,7 +43,7 @@ public class FileManagerPage extends TimewebPage {
         String filename;
 
         while (true) {
-            filename = Utils.getRandomAlphaNumericSequence(Utils.randomInt(3, 12));
+            filename = RndUtils.getRandomAlphaNumericSequence(RndUtils.randomInt(3, 12));
             fileNameInput.clear();
             fileNameInput.sendKeys(filename);
 

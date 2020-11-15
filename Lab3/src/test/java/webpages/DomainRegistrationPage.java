@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.Utils;
+import utils.RndUtils;
 
 public class DomainRegistrationPage extends TimewebPage {
     @FindBy(xpath = "//div[@class='domain-whois-check__input js-region-domain-input']//input[@class='input__field js-input']")
@@ -32,7 +32,7 @@ public class DomainRegistrationPage extends TimewebPage {
 
         String domainName;
         do {
-            domainName = Utils.getRandomAlphaNumericSequence(10);
+            domainName = RndUtils.getRandomAlphaNumericSequence(10);
             domainNameInput.clear();
             domainNameInput.sendKeys(domainName);
 

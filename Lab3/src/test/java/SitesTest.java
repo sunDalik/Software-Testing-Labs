@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import utils.DriverProvider;
-import utils.Utils;
+import utils.RndUtils;
 import webpages.*;
 
 public class SitesTest {
@@ -34,8 +34,8 @@ public class SitesTest {
 
         FileManagerPage fileManPage = new FileManagerPage(driver, true);
         fileManPage.navigateTo(new String[]{dirName, "public_html"});
-        String divId = Utils.getRandomAlphabetSequence(5);
-        String divContents = Utils.getRandomAlphaNumericSequence(50);
+        String divId = RndUtils.getRandomAlphabetSequence(5);
+        String divContents = RndUtils.getRandomAlphaNumericSequence(50);
         String fileContents = String.format("<html>\n<div id='%s'>\n%s\n</div>\n</html>\n", divId, divContents);
         fileManPage.writeToFile("index.htm", fileContents);
 

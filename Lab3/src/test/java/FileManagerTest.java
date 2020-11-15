@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import utils.DriverProvider;
 import utils.FileStruct;
-import utils.Utils;
+import utils.RndUtils;
 import webpages.FileManagerPage;
 import webpages.LoginPage;
 
@@ -16,7 +16,7 @@ public class FileManagerTest {
         new LoginPage(driver, true).loginAndWait();
 
         FileManagerPage fileManPage = new FileManagerPage(driver, true);
-        String fileContents = Utils.getRandomAlphaNumericSequence(10) + "\n" + Utils.getRandomAlphaNumericSequence(15) + "\n" + Utils.getRandomAlphaNumericSequence(30);
+        String fileContents = RndUtils.getRandomAlphaNumericSequence(10) + "\n" + RndUtils.getRandomAlphaNumericSequence(15) + "\n" + RndUtils.getRandomAlphaNumericSequence(30);
         FileStruct file = fileManPage.createRandomFile(true, fileContents);
 
         Assertions.assertEquals(file.name, fileManPage.getFileNameCell(file.name).getText());
@@ -106,7 +106,7 @@ public class FileManagerTest {
         FileManagerPage fileManPage = new FileManagerPage(driver, true);
         ArrayList<FileStruct> createdFiles = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            FileStruct file = fileManPage.createRandomFile(true, Utils.getRandomAlphaNumericSequence(Utils.randomInt(5, 100)));
+            FileStruct file = fileManPage.createRandomFile(true, RndUtils.getRandomAlphaNumericSequence(RndUtils.randomInt(5, 100)));
             createdFiles.add(file);
         }
 
@@ -140,7 +140,7 @@ public class FileManagerTest {
         FileManagerPage fileManPage = new FileManagerPage(driver, true);
         ArrayList<FileStruct> createdFiles = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            FileStruct file = fileManPage.createRandomFile(true, Utils.getRandomAlphaNumericSequence(Utils.randomInt(5, 100)));
+            FileStruct file = fileManPage.createRandomFile(true, RndUtils.getRandomAlphaNumericSequence(RndUtils.randomInt(5, 100)));
             createdFiles.add(file);
         }
 

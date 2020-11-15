@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.Utils;
+import utils.RndUtils;
 
 public class SitesPage extends TimewebPage {
     @FindBy(xpath = "//div[@id='create_site_block']")
@@ -29,7 +29,7 @@ public class SitesPage extends TimewebPage {
         String dirName;
 
         while (true) {
-            dirName = Utils.getRandomAlphaNumericSequence(10);
+            dirName = RndUtils.getRandomAlphaNumericSequence(10);
             siteDirInput.clear();
             siteDirInput.sendKeys(dirName);
 

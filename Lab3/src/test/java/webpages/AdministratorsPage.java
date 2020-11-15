@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import utils.Utils;
+import utils.RndUtils;
 
 public class AdministratorsPage extends TimewebPage {
     @FindBy(xpath = "//button[@class='cpS-btn-acc js-add-person-button']")
@@ -33,9 +33,9 @@ public class AdministratorsPage extends TimewebPage {
         WebElement emailInput = driver.findElement(By.xpath("//div[@class='js-region-email']//input[@class='input__field js-input']"));
         WebElement createButton = driver.findElement(By.xpath("//button[@class='cpS-btn-acc js-create-person disabled']"));
 
-        String surname = Utils.getRandomAlphabetSequence(6);
-        String name = Utils.getRandomAlphabetSequence(6);
-        String patronymic = Utils.getRandomAlphabetSequence(6);
+        String surname = RndUtils.getRandomAlphabetSequence(6);
+        String name = RndUtils.getRandomAlphabetSequence(6);
+        String patronymic = RndUtils.getRandomAlphabetSequence(6);
 
         Actions actions = new Actions(driver);
 
@@ -54,7 +54,7 @@ public class AdministratorsPage extends TimewebPage {
         actions.sendKeys("111111").perform();
         addressInput.sendKeys("-");
         phoneInput.sendKeys("+7 (000) 000-00-00");
-        emailInput.sendKeys(Utils.getRandomEmail(5));
+        emailInput.sendKeys(RndUtils.getRandomEmail(5));
 
         // to unfocus last input element
         phoneInput.click();

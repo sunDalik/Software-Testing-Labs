@@ -1,14 +1,8 @@
 package utils;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.Arrays;
 import java.util.Random;
 
-public class Utils {
+public class RndUtils {
     public static String getRandomLetterSequence(int length, String letters) {
         Random random = new Random();
 
