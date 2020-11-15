@@ -44,6 +44,14 @@ public class SitesTest {
         String url = "http://" + domainName + "/";
         driver.get(url);
 
+        // if timeweb redirected us to its default page "Domain is parked" then we need to clear cache and try again
+        // I do it by starting a new driver
+        if (!url.equals(driver.getCurrentUrl())) {
+            driver.quit();
+            driver = DriverProvider.getDriver();
+            driver.get(url);
+        }
+
         try {
             driver.findElement(By.xpath("//div[@id='" + divId + "']"));
         } catch (NoSuchElementException e) {
