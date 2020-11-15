@@ -26,7 +26,7 @@ public class SitesPage {
     public String createRandomSite() {
         int sitesTableRowsCount = driver.findElements(By.xpath("//div[@id='catalog_new']//table/tbody/tr")).size();
 
-        createSiteButton.click();
+        Utils.jsClick(driver,createSiteButton);
 
         WebElement siteDirInput = driver.findElement(By.xpath("//input[@id='site_dir']"));
         WebElement createSiteButton2 = driver.findElement(By.xpath("//button[@id='save_button']"));

@@ -13,12 +13,21 @@ import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class FileManagerPage {
     WebDriver driver;
 
     @FindBy(xpath = "//span[@id='file_actions']")
     public WebElement fileActionsButton;
+
+    @FindBy(xpath = "//div[@id='sortedby-select']")
+    public WebElement sortList;
+
+    @FindBy(xpath = "//ul[@id='sortedby-menu']")
+    public WebElement sortMenu;
 
     public FileManagerPage(WebDriver driver, boolean gotoPage) {
         if (gotoPage) driver.get("https://hosting.timeweb.ru/fileman");
@@ -39,7 +48,7 @@ public class FileManagerPage {
         String filename = "";
 
         while (true) {
-            filename = Utils.getRandomAlphaNumericSequence(10);
+            filename = Utils.getRandomAlphaNumericSequence(Utils.randomInt(3, 12));
             fileNameInput.clear();
             fileNameInput.sendKeys(filename);
 
@@ -152,5 +161,25 @@ public class FileManagerPage {
             WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
             actions.click(fileContentsInput).perform();
         }
+    }
+
+
+    public void setSortMode(int sortMode) {
+        sortList.click();
+        sortMenu.findElement(By.xpath("./li[" + sortMode + "]")).click();
+    }
+
+    public ArrayList<FileStruct> getFileList() {
+        List<WebElement> fileRows = driver.findElements(By.xpath("//div[@id='main_table']/table/tbody/tr[@id]"));
+        ArrayList<FileStruct> files = new ArrayList<>();
+        for (WebElement fileRow : fileRows) {
+            WebElement icon = fileRow.findElement(By.xpath("./td[1]/*[local-name() = 'svg']"));
+            boolean isFolder = Utils.elementHasClass(icon, "icon-folder");
+            String fileName = fileRow.findElement(By.xpath("./td[2]/div")).getText();
+
+            files.add(new FileStruct(fileName, isFolder));
+        }
+
+        return files;
     }
 }

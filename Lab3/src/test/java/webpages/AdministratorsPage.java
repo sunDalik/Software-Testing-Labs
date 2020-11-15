@@ -41,14 +41,21 @@ public class AdministratorsPage {
         String name = Utils.getRandomAlphabetSequence(6);
         String patronymic = Utils.getRandomAlphabetSequence(6);
 
+        Actions actions = new Actions(driver);
+
         surnameInput.sendKeys(surname);
         nameInput.sendKeys(name);
         patronymicInput.sendKeys(patronymic);
-        birthdayInput.sendKeys("01.01.2000");
-        passportNumberInput.sendKeys("1111-111111");
-        passportDateInput.sendKeys("01.01.2014");
+        // in firefox driver you cant directly send keys to some fields without using actions
+        birthdayInput.click();
+        actions.sendKeys("01.01.2000").perform();
+        passportNumberInput.click();
+        actions.sendKeys("1111-111111").perform();
+        passportDateInput.click();
+        actions.sendKeys("01.01.2014").perform();
         passportIssuedByInput.sendKeys("-");
-        indexInput.sendKeys("111111");
+        indexInput.click();
+        actions.sendKeys("111111").perform();
         addressInput.sendKeys("-");
         phoneInput.sendKeys("+7 (000) 000-00-00");
         emailInput.sendKeys(Utils.getRandomEmail(5));
@@ -64,7 +71,7 @@ public class AdministratorsPage {
     }
 
     public void deleteAdmin(String fullName) {
-        driver.findElement(By.xpath("//button[@data-person-name='" + fullName + "']")).click();
-        driver.findElement(By.xpath("//button[@class='cpS-btn-warning js-confirm']")).sendKeys(Keys.RETURN);;
+        Utils.jsClick(driver, driver.findElement(By.xpath("//button[@data-person-name='" + fullName + "']")));
+        driver.findElement(By.xpath("//button[@class='cpS-btn-warning js-confirm']")).sendKeys(Keys.RETURN);
     }
 }

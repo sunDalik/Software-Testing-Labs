@@ -48,4 +48,8 @@ public class Utils {
             return false;
         }
     }
+
+    public static int randomInt(int min, int max) {
+        return min + new Random().nextInt(max - min + 1);
+    }
 }
