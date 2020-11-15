@@ -36,7 +36,7 @@ public class RegistrationTest {
         String username = Utils.getRandomAlphabetSequence(4);
         servicesHostingPage.registerUser(name, email, username);
 
-        Assertions.assertTrue(Utils.isAlertPresent(driver));
+        Assertions.assertTrue(servicesHostingPage.isAlertPresent());
         driver.quit();
     }
 
@@ -50,7 +50,7 @@ public class RegistrationTest {
         String username = Utils.getRandomAlphabetSequence(10).toLowerCase();
         servicesHostingPage.registerUser(name, email, username);
 
-        Assertions.assertTrue(Utils.isAlertPresent(driver));
+        Assertions.assertTrue(servicesHostingPage.isAlertPresent());
         driver.quit();
     }
 }

@@ -3,7 +3,6 @@ package webpages;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.FileStruct;
@@ -16,9 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileManagerPage {
-    WebDriver driver;
-
+public class FileManagerPage extends TimewebPage {
     @FindBy(xpath = "//span[@id='file_actions']")
     public WebElement fileActionsButton;
 
@@ -30,10 +27,7 @@ public class FileManagerPage {
 
     public FileManagerPage(WebDriver driver, boolean gotoPage) {
         if (gotoPage) driver.get("https://hosting.timeweb.ru/fileman");
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-
-        ((JavascriptExecutor) driver).executeScript("document.head.insertAdjacentHTML('beforeend', '<style>.info-bar{display:none !important;}</style>')");
+        setup(driver);
     }
 
     public FileStruct createRandomFile(boolean changeContents, String contents) {
@@ -46,7 +40,7 @@ public class FileManagerPage {
 
         WebElement createNewFileButton = driver.findElement(By.xpath("//button[@id='save_button']"));
         WebElement fileCreationValidationMessage = driver.findElement(By.xpath("//span[@id='name-jq-validate-message']"));
-        String filename = "";
+        String filename;
 
         while (true) {
             filename = Utils.getRandomAlphaNumericSequence(Utils.randomInt(3, 12));
@@ -80,11 +74,15 @@ public class FileManagerPage {
     }
 
     public void deleteFile(String fileName) {
-        Utils.jsClick(driver, getFileNameCell(fileName));
+        try {
+            jsClick(getFileNameCell(fileName));
+        } catch (StaleElementReferenceException e) {
+            jsClick(getFileNameCell(fileName));
+        }
 
-        Utils.jsClick(driver, fileActionsButton);
+        jsClick(fileActionsButton);
         WebElement deleteFileButton = driver.findElement(By.xpath("//div[@class='ui-tooltip-content']/div[@id='div_actions_file__select_delete']"));
-        Utils.jsClick(driver, deleteFileButton);
+        jsClick(deleteFileButton);
 
         new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
@@ -106,7 +104,7 @@ public class FileManagerPage {
         }
 
         WebElement fileContentsCloseButton = driver.findElement(By.xpath("//div[@aria-describedby='file_redactor_dialog_2']/div[1]/button"));
-        Utils.jsClick(driver, fileContentsCloseButton);
+        jsClick(fileContentsCloseButton);
 
         return contents;
     }
@@ -115,14 +113,6 @@ public class FileManagerPage {
         WebElement element = driver.findElement(By.xpath("//div[@id='main_table']//table/tbody/tr/td[2]/div[normalize-space()='" + fileName + "']"));
         scrollIntoView(element);
         return element;
-    }
-
-    public void scrollIntoView(WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ignored) {
-        }
     }
 
     public void navigateTo(String[] path) {
@@ -147,16 +137,8 @@ public class FileManagerPage {
 
     public void navigateToHome() {
         WebElement homeButton = driver.findElement(By.xpath("//div[@id='home']"));
-        Utils.jsClick(driver, homeButton);
+        jsClick(homeButton);
         waitLoading();
-    }
-
-    public void waitLoading() {
-        try {
-            new WebDriverWait(driver, 3).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
-        } catch (Exception ignored) {
-        }
-        new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
     }
 
     public void saveCurrentFile() {
@@ -164,7 +146,7 @@ public class FileManagerPage {
         fileContentsSaveButton.click();
 
         WebElement fileContentsCloseButton = driver.findElement(By.xpath("//div[@role='dialog' and not(contains(@style,'display: none'))]/div[1]/button"));
-        Utils.jsClick(driver, fileContentsCloseButton);
+        jsClick(fileContentsCloseButton);
     }
 
     public void clickIntoFileEditor() {
@@ -180,14 +162,6 @@ public class FileManagerPage {
         }
     }
 
-    public void scrollToTop() {
-        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ignored) {
-        }
-    }
-
     public void setSortMode(int sortMode) {
         sortList.click();
         sortMenu.findElement(By.xpath("./li[" + sortMode + "]")).click();
@@ -198,7 +172,7 @@ public class FileManagerPage {
         ArrayList<FileStruct> files = new ArrayList<>();
         for (WebElement fileRow : fileRows) {
             WebElement icon = fileRow.findElement(By.xpath("./td[1]/*[local-name() = 'svg']"));
-            boolean isFolder = Utils.elementHasClass(icon, "icon-folder");
+            boolean isFolder = elementHasClass(icon, "icon-folder");
             String fileName = fileRow.findElement(By.xpath("./td[2]/div")).getText();
 
             if (isFolder) {

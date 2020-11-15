@@ -4,14 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Utils;
 
-public class DomainRegistrationPage {
-    WebDriver driver;
-
+public class DomainRegistrationPage extends TimewebPage {
     @FindBy(xpath = "//div[@class='domain-whois-check__input js-region-domain-input']//input[@class='input__field js-input']")
     public WebElement domainNameInput;
 
@@ -23,8 +20,7 @@ public class DomainRegistrationPage {
 
     public DomainRegistrationPage(WebDriver driver, boolean gotoPage) {
         if (gotoPage) driver.get("https://hosting.timeweb.ru/domains/registration");
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+        setup(driver);
     }
 
     // requires at least one admin to exist
@@ -34,7 +30,7 @@ public class DomainRegistrationPage {
         driver.findElement(By.xpath("//div[@class='zone-selector__filter js-region-filter']//input[@class='input__field js-input']")).sendKeys(domainZone);
         driver.findElement(By.xpath("//span[@title='.tmweb.ru']")).click();
 
-        String domainName = "";
+        String domainName;
         do {
             domainName = Utils.getRandomAlphaNumericSequence(10);
             domainNameInput.clear();
@@ -45,7 +41,7 @@ public class DomainRegistrationPage {
                     ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='input__help js-help input__help_error']")),
                     ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='domain-whois-check']/button[not(contains(@class,'disabled'))]"))
             ));
-        } while (Utils.elementHasClass(domainRegistrationButton, "disabled"));
+        } while (elementHasClass(domainRegistrationButton, "disabled"));
 
         domainRegistrationButton.click();
 
@@ -58,8 +54,7 @@ public class DomainRegistrationPage {
         saveBindingButton.click();
 
         driver.findElement(By.xpath("//button[@class='tw-button-primary domain-registration__submit js-ui-submit']")).click();
-
-        new WebDriverWait(driver, 10).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
+        waitLoading();
 
         return domainName.toLowerCase() + domainZone;
     }

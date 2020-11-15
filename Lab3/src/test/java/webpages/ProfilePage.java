@@ -3,9 +3,8 @@ package webpages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class ProfilePage {
+public class ProfilePage extends TimewebPage {
     @FindBy(xpath = "//article[@class='account-data-item']/span[4]")
     public WebElement email;
 
@@ -14,6 +13,6 @@ public class ProfilePage {
 
     public ProfilePage(WebDriver driver, boolean gotoPage) {
         if (gotoPage) driver.get("https://hosting.timeweb.ru/account");
-        PageFactory.initElements(driver, this);
+        setup(driver);
     }
 }

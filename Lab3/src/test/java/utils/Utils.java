@@ -31,24 +31,6 @@ public class Utils {
         return getRandomAlphaNumericSequence(length) + "@" + getRandomAlphabetSequence(4) + "." + getRandomAlphabetSequence(3);
     }
 
-    public static boolean elementHasClass(WebElement element, String className) {
-        return Arrays.asList(element.getAttribute("class").split(" ")).contains(className);
-    }
-
-    public static void jsClick(WebDriver driver, WebElement element) {
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", element);
-    }
-
-    public static boolean isAlertPresent(WebDriver driver) {
-        try {
-            driver.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException ex) {
-            return false;
-        }
-    }
-
     public static int randomInt(int min, int max) {
         return min + new Random().nextInt(max - min + 1);
     }

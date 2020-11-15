@@ -1,8 +1,6 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import utils.DriverProvider;
 import utils.Utils;
 import webpages.*;
@@ -43,6 +41,14 @@ public class SitesTest {
 
         String url = "http://" + domainName + "/";
         driver.get(url);
+
+        // in case we get this exception
+        // org.openqa.selenium.UnhandledAlertException: Dismissed user prompt dialog: При сохранении файла произошла ошибка
+        try {
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+        } catch (NoAlertPresentException ignored) {
+        }
 
         // if timeweb redirected us to its default page "Domain is parked" then we need to clear cache and try again
         // I do it by starting a new driver

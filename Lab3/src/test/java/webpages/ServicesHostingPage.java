@@ -3,13 +3,8 @@ package webpages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import utils.ProfileStruct;
-import utils.Utils;
 
-public class ServicesHostingPage {
-    WebDriver driver;
-
+public class ServicesHostingPage extends TimewebPage {
     @FindBy(xpath = "//a[@class='btn js-hosting-optimo']")
     public WebElement registrationButton;
 
@@ -30,12 +25,11 @@ public class ServicesHostingPage {
 
     public ServicesHostingPage(WebDriver driver, boolean gotoPage) {
         if (gotoPage) driver.get("https://timeweb.com/ru/services/hosting/");
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+        setup(driver);
     }
 
     public void registerUser(String name, String email, String username) {
-        Utils.jsClick(driver, registrationButton);
+        jsClick(registrationButton);
         registrationNameInput.sendKeys(name);
         registrationEmailInput.sendKeys(email);
         specifyUsernameButton.click();

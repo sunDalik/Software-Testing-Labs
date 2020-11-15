@@ -6,19 +6,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import utils.Utils;
 
-public class AdministratorsPage {
-    WebDriver driver;
-
+public class AdministratorsPage extends TimewebPage {
     @FindBy(xpath = "//button[@class='cpS-btn-acc js-add-person-button']")
     public WebElement addAdminButton;
 
     public AdministratorsPage(WebDriver driver, boolean gotoPage) {
         if (gotoPage) driver.get("https://hosting.timeweb.ru/persons");
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+        setup(driver);
     }
 
     // returns full name of the created admin
@@ -71,7 +67,7 @@ public class AdministratorsPage {
     }
 
     public void deleteAdmin(String fullName) {
-        Utils.jsClick(driver, driver.findElement(By.xpath("//button[@data-person-name='" + fullName + "']")));
+        jsClick(driver.findElement(By.xpath("//button[@data-person-name='" + fullName + "']")));
         driver.findElement(By.xpath("//button[@class='cpS-btn-warning js-confirm']")).sendKeys(Keys.RETURN);
     }
 }

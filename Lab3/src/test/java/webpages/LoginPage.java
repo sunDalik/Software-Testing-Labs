@@ -5,12 +5,9 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import utils.Credentials;
 
-public class LoginPage {
-    WebDriver driver;
-
+public class LoginPage extends TimewebPage {
     @FindBy(xpath = "//input[@name='LoginForm[username]']")
     public WebElement loginInput;
 
@@ -22,8 +19,7 @@ public class LoginPage {
 
     public LoginPage(WebDriver driver, boolean gotoPage) {
         if (gotoPage) driver.get("https://hosting.timeweb.ru");
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
+        setup(driver);
     }
 
     public void login() {
@@ -43,8 +39,12 @@ public class LoginPage {
     }
 
     public void loginAndWait() {
-        login();
-        //new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//p[@class='acc-name js-acc-name']")));
-        new HostingPage(driver, false).username.getText();
+        try {
+            login();
+            new HostingPage(driver, false).username.getText();
+        } catch (Exception e) {
+            login();
+            new HostingPage(driver, false).username.getText();
+        }
     }
 }
