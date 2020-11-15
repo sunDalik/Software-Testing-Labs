@@ -33,7 +33,7 @@ public class FileManagerTest {
 
         FileManagerPage fileManPage = new FileManagerPage(driver, true);
         ArrayList<FileStruct> createdFiles = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             FileStruct file = fileManPage.createRandomFile();
             createdFiles.add(file);
         }
@@ -49,6 +49,7 @@ public class FileManagerTest {
                 foldersPart = false;
                 lastName = "";
             }
+            System.out.println(file.isFolder + ", " + file.name + ", " + lastName);
             if (!lastName.equals("")) {
                 Assertions.assertTrue(file.name.compareTo(lastName) >= 0);
             }
@@ -68,7 +69,7 @@ public class FileManagerTest {
 
         FileManagerPage fileManPage = new FileManagerPage(driver, true);
         ArrayList<FileStruct> createdFiles = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             FileStruct file = fileManPage.createRandomFile();
             createdFiles.add(file);
         }
@@ -84,6 +85,7 @@ public class FileManagerTest {
                 foldersPart = false;
                 lastName = "";
             }
+            System.out.println(file.isFolder + ", " + file.name + ", " + lastName);
             if (!lastName.equals("")) {
                 Assertions.assertTrue(file.name.compareTo(lastName) <= 0);
             }
@@ -103,7 +105,7 @@ public class FileManagerTest {
 
         FileManagerPage fileManPage = new FileManagerPage(driver, true);
         ArrayList<FileStruct> createdFiles = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             FileStruct file = fileManPage.createRandomFile(true, Utils.getRandomAlphaNumericSequence(Utils.randomInt(5, 100)));
             createdFiles.add(file);
         }
@@ -119,6 +121,7 @@ public class FileManagerTest {
                 foldersPart = false;
                 lastSize = -1;
             }
+            System.out.println(file.isFolder + ", " + file.size + ", " + lastSize);
             Assertions.assertTrue(file.size >= lastSize);
             lastSize = file.size;
         }
@@ -136,7 +139,7 @@ public class FileManagerTest {
 
         FileManagerPage fileManPage = new FileManagerPage(driver, true);
         ArrayList<FileStruct> createdFiles = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             FileStruct file = fileManPage.createRandomFile(true, Utils.getRandomAlphaNumericSequence(Utils.randomInt(5, 100)));
             createdFiles.add(file);
         }
@@ -152,6 +155,7 @@ public class FileManagerTest {
                 foldersPart = false;
                 lastSize = -1;
             }
+            System.out.println(file.isFolder + ", " + file.size + ", " + lastSize);
             if (lastSize != -1) {
                 Assertions.assertTrue(file.size <= lastSize);
             }

@@ -49,6 +49,7 @@ public class SitesTest {
         if (!url.equals(driver.getCurrentUrl())) {
             driver.quit();
             driver = DriverProvider.getDriver();
+            new LoginPage(driver, true).loginAndWait();
             driver.get(url);
         }
 

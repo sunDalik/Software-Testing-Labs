@@ -27,7 +27,7 @@ public class LoginTest {
         // username can only be 5-10 letters long so 11 letter long login will always fail
         loginPage.loginInput.sendKeys(Utils.getRandomAlphaNumericSequence(11));
         loginPage.passwordInput.sendKeys(Utils.getRandomAlphaNumericSequence(10));
-        loginPage.submitButton.click();
+        loginPage.submit();
         new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(loginPage.errorBox));
         Assertions.assertTrue(loginPage.errorBox.isDisplayed());
         driver.quit();

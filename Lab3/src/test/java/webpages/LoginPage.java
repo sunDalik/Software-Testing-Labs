@@ -1,5 +1,7 @@
 package webpages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,9 +17,6 @@ public class LoginPage {
     @FindBy(xpath = "//input[@name='LoginForm[password]']")
     public WebElement passwordInput;
 
-    @FindBy(xpath = "//button[@name='login-button']")
-    public WebElement submitButton;
-
     @FindBy(xpath = "//div[@class='login-page__error-message']/div")
     public WebElement errorBox;
 
@@ -30,7 +29,17 @@ public class LoginPage {
     public void login() {
         loginInput.sendKeys(Credentials.login);
         passwordInput.sendKeys(Credentials.password);
-        submitButton.click();
+        submit();
+    }
+
+    public void submit() {
+        try {
+            WebElement submitButton = driver.findElement(By.xpath("//button[@name='login-button']"));
+            submitButton.click();
+        } catch (StaleElementReferenceException e) {
+            WebElement submitButton = driver.findElement(By.xpath("//button[@name='login-button']"));
+            submitButton.click();
+        }
     }
 
     public void loginAndWait() {

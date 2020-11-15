@@ -32,6 +32,8 @@ public class FileManagerPage {
         if (gotoPage) driver.get("https://hosting.timeweb.ru/fileman");
         PageFactory.initElements(driver, this);
         this.driver = driver;
+
+        ((JavascriptExecutor) driver).executeScript("document.head.insertAdjacentHTML('beforeend', '<style>.info-bar{display:none !important;}</style>')");
     }
 
     public FileStruct createRandomFile(boolean changeContents, String contents) {
@@ -110,7 +112,17 @@ public class FileManagerPage {
     }
 
     public WebElement getFileNameCell(String fileName) {
-        return driver.findElement(By.xpath("//div[@id='main_table']//table/tbody/tr/td[2]/div[normalize-space()='" + fileName + "']"));
+        WebElement element = driver.findElement(By.xpath("//div[@id='main_table']//table/tbody/tr/td[2]/div[normalize-space()='" + fileName + "']"));
+        scrollIntoView(element);
+        return element;
+    }
+
+    public void scrollIntoView(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ignored) {
+        }
     }
 
     public void navigateTo(String[] path) {
@@ -144,7 +156,7 @@ public class FileManagerPage {
             new WebDriverWait(driver, 3).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
         } catch (Exception ignored) {
         }
-        new WebDriverWait(driver, 10).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
+        new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@id='js-preloader']")));
     }
 
     public void saveCurrentFile() {
@@ -159,13 +171,22 @@ public class FileManagerPage {
         Actions actions = new Actions(driver);
         try {
             WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
+            scrollToTop();
             actions.click(fileContentsInput).perform();
-        } catch (StaleElementReferenceException e) {
+        } catch (Exception e) {
             WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
+            scrollToTop();
             actions.click(fileContentsInput).perform();
         }
     }
 
+    public void scrollToTop() {
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ignored) {
+        }
+    }
 
     public void setSortMode(int sortMode) {
         sortList.click();
@@ -183,8 +204,11 @@ public class FileManagerPage {
             if (isFolder) {
                 WebElement fileSizeButton = fileRow.findElement(By.xpath("./td[3]/div"));
                 fileSizeButton.click();
-                WebElement loadingIcon = fileRow.findElement(By.xpath("./td[3]/*[local-name() = 'svg']"));
-                new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOf(loadingIcon));
+                try {
+                    WebElement loadingIcon = fileRow.findElement(By.xpath("./td[3]/*[local-name() = 'svg']"));
+                    new WebDriverWait(driver, 20).until(ExpectedConditions.invisibilityOf(loadingIcon));
+                } catch (Exception ignored) {
+                }
             }
 
             String sizeString = fileRow.findElement(By.xpath("./td[3]")).getText();
