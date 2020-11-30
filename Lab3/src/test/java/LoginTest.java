@@ -24,8 +24,7 @@ public class LoginTest {
     public void negativeLoginTest() {
         WebDriver driver = DriverProvider.getDriver();
         LoginPage loginPage = new LoginPage(driver, true);
-        // username can only be 5-10 letters long so 11 letter long login will always fail
-        loginPage.loginInput.sendKeys(RndUtils.getRandomAlphaNumericSequence(11));
+        loginPage.loginInput.sendKeys(Credentials.login);
         loginPage.passwordInput.sendKeys(RndUtils.getRandomAlphaNumericSequence(10));
         loginPage.submit();
         new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(loginPage.errorBox));

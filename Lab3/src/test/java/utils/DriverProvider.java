@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
 public class DriverProvider {
-    private static DriverType driverType = DriverType.FIREFOX;
+    private static DriverType driverType = DriverType.CHROME;
 
     static {
         WebDriverManager.chromedriver().setup();

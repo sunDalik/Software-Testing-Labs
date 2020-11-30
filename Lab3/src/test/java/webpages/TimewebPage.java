@@ -27,9 +27,10 @@ public class TimewebPage {
 
     public boolean isAlertPresent() {
         try {
+            new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
             driver.switchTo().alert();
             return true;
-        } catch (NoAlertPresentException ex) {
+        } catch (Exception ex) {
             return false;
         }
     }

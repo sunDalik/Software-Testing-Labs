@@ -28,6 +28,7 @@ public class FileManagerPage extends TimewebPage {
     public FileManagerPage(WebDriver driver, boolean gotoPage) {
         if (gotoPage) driver.get("https://hosting.timeweb.ru/fileman");
         setup(driver);
+        waitLoading();
     }
 
     public FileStruct createRandomFile(boolean changeContents, String contents) {
@@ -84,10 +85,11 @@ public class FileManagerPage extends TimewebPage {
         WebElement deleteFileButton = driver.findElement(By.xpath("//div[@class='ui-tooltip-content']/div[@id='div_actions_file__select_delete']"));
         jsClick(deleteFileButton);
 
-        new WebDriverWait(driver, 10).until(ExpectedConditions.alertIsPresent());
-        Alert alert = driver.switchTo().alert();
-        alert.accept();
-        waitLoading();
+        if (isAlertPresent()) {
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+            waitLoading();
+        }
     }
 
     public String getFileContents(String fileName) {
@@ -111,7 +113,15 @@ public class FileManagerPage extends TimewebPage {
 
     public WebElement getFileNameCell(String fileName) {
         WebElement element = driver.findElement(By.xpath("//div[@id='main_table']//table/tbody/tr/td[2]/div[normalize-space()='" + fileName + "']"));
-        scrollIntoView(element);
+        int attempt = 0;
+        while (attempt++ < 5) {
+            try {
+                element = driver.findElement(By.xpath("//div[@id='main_table']//table/tbody/tr/td[2]/div[normalize-space()='" + fileName + "']"));
+                scrollIntoView(element);
+                break;
+            } catch (Exception ignored) {
+            }
+        }
         return element;
     }
 
@@ -151,14 +161,15 @@ public class FileManagerPage extends TimewebPage {
 
     public void clickIntoFileEditor() {
         Actions actions = new Actions(driver);
-        try {
-            WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
-            scrollToTop();
-            actions.click(fileContentsInput).perform();
-        } catch (Exception e) {
-            WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
-            scrollToTop();
-            actions.click(fileContentsInput).perform();
+        int attempt = 0;
+        while (attempt++ < 5) {
+            try {
+                WebElement fileContentsInput = driver.findElement(By.xpath("//div[@class='CodeMirror-code']/div[1]/pre"));
+                scrollToTop();
+                actions.click(fileContentsInput).perform();
+                break;
+            } catch (Exception ignored) {
+            }
         }
     }
 

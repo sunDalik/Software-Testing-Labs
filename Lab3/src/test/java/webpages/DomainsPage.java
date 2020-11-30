@@ -10,8 +10,8 @@ public class DomainsPage extends TimewebPage {
     }
 
     public void deleteDomain(String domainName) {
-        driver.findElement(By.xpath("//button[@class='cpS-btn-icon js-delete-domain' and @data-domain='" + domainName + "']")).click();
-        driver.findElement(By.xpath("//button[@class='tw-button-danger js-confirm']")).click();
+        jsClick(driver.findElement(By.xpath("//button[@class='cpS-btn-icon js-delete-domain' and @data-domain='" + domainName + "']")));
+        jsClick(driver.findElement(By.xpath("//button[@class='tw-button-danger js-confirm']")));
         waitLoading();
     }
 }
